@@ -1,0 +1,3110 @@
+<!DOCTYPE html>
+ <html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agro Pestsafe Wealth</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --c1: #007bff; /* Primary Blue */
+  --c2: #00b4d8; /* Light Cyan Blue */
+  --c3: #fd7e14; /* Accent Orange */
+  --c4: #ffc107; /* Warning Gold */
+  --c5: #e83e8c; /* Pink */
+  --c6: #6f42c1; /* Purple */
+  --c7: #0056b3; /* Deep Blue */
+  --bg: #f4f7f6; /* Bright Light background */
+  --bg2: #ffffff; /* White background */
+  --bg3: #e9ecef; /* Soft grey/blue background */
+  --card: #ffffff;
+  --border: rgba(0, 123, 255, 0.15);
+  --text: #1a252f;
+  --muted: #6c757d;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── AUTH SCREENS ── */
+.auth-screen {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background: radial-gradient(circle at 20% 50%, #e3f2fd 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, #e0f2f1 0%, transparent 50%),
+              var(--bg);
+  position:relative;
+  overflow:hidden;
+}
+
+.auth-screen::before {
+  content:'';
+  position:absolute;
+  top:-50%;left:-50%;
+  width:200%;height:200%;
+  background:repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 40px,
+    rgba(0,123,255,0.02) 40px,
+    rgba(0,123,255,0.02) 41px
+  );
+  animation:gridMove 20s linear infinite;
+}
+
+@keyframes gridMove { to { transform:translate(41px,41px); } }
+
+.auth-logo {
+  text-align:center;
+  margin-bottom:30px;
+  position:relative;
+  z-index:2;
+}
+
+.auth-logo .leaf-icon {
+  font-size:60px;
+  display:block;
+  filter:drop-shadow(0 0 20px rgba(0,123,255,0.3));
+  animation:leafPulse 2s ease-in-out infinite;
+}
+
+@keyframes leafPulse {
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+
+.auth-logo h1 {
+  font-family:'Orbitron',sans-serif;
+  font-size:22px;
+  font-weight:900;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c7));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:1px;
+  margin-top:8px;
+}
+
+.auth-logo p {
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+.auth-card {
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:30px 24px;
+  width:100%;
+  max-width:400px;
+  box-shadow:0 10px 40px rgba(0,123,255,0.08), 0 20px 60px rgba(0,0,0,0.05);
+  position:relative;
+  z-index:2;
+}
+
+.auth-card h2 {
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;
+  color:var(--c1);
+  margin-bottom:20px;
+  text-align:center;
+  letter-spacing:2px;
+}
+
+.form-group {
+  margin-bottom:14px;
+}
+
+.form-group label {
+  display:block;
+  font-size:11px;
+  color:var(--c7);
+  margin-bottom:5px;
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+.form-group input, .form-group select {
+  width:100%;
+  background:rgba(0,123,255,0.03);
+  border:1px solid rgba(0,123,255,0.15);
+  border-radius:10px;
+  padding:11px 14px;
+  color:var(--text);
+  font-size:14px;
+  font-family:'Inter',sans-serif;
+  outline:none;
+  transition:all 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus {
+  border-color:var(--c1);
+  box-shadow:0 0 15px rgba(0,123,255,0.15);
+  background:rgba(0,123,255,0.01);
+}
+
+.form-group input::placeholder { color:rgba(0,0,0,0.3); }
+
+.btn-primary {
+  width:100%;
+  padding:13px;
+  background:linear-gradient(135deg,var(--c1),var(--c7));
+  border:none;
+  border-radius:12px;
+  color:#fff;
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:all 0.3s;
+  margin-top:8px;
+  text-transform:uppercase;
+}
+
+.btn-primary:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(0,123,255,0.3);
+}
+
+.auth-switch {
+  text-align:center;
+  margin-top:18px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.auth-switch span {
+  color:var(--c3);
+  cursor:pointer;
+  font-weight:600;
+}
+
+.auth-switch span:hover { text-decoration:underline; }
+
+.inv-note {
+  background:rgba(0,123,255,0.08);
+  border:1px solid rgba(0,123,255,0.2);
+  border-radius:8px;
+  padding:8px 12px;
+  font-size:12px;
+  color:var(--c7);
+  margin-bottom:14px;
+  text-align:center;
+}
+
+/* ── MAIN APP ── */
+.app { display:none; flex-direction:column; min-height:100vh; }
+
+.top-bar {
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.top-bar-logo {
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;
+  font-weight:900;
+  background:linear-gradient(90deg,var(--c1),var(--c3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.top-bar-balance {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.top-bar-balance .label { font-size:9px; color:var(--muted); letter-spacing:2px; }
+.top-bar-balance .amount {
+  font-family:'Orbitron',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  color:var(--c1);
+}
+
+.top-bar-right {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.top-bar-vip {
+  background:linear-gradient(135deg,var(--c4),var(--c3));
+  color:#fff;
+  border-radius:20px;
+  padding:3px 10px;
+  font-size:10px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;
+}
+
+.content {
+  margin-top:60px;
+  margin-bottom:70px;
+  min-height:calc(100vh - 130px);
+}
+
+/* ── TAB CONTENT ── */
+.tab-pane { display:none; animation:fadeIn 0.3s ease; }
+.tab-pane.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── HOME TAB ── */
+.home-hero {
+  position:relative;
+  overflow:hidden;
+  height:340px;
+  background:linear-gradient(180deg, #e3f2fd 0%, #ffffff 100%);
+}
+
+/* Animated people with pesticides */
+.hero-3d-scene {
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:100%;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:20px;
+  padding-bottom:20px;
+}
+
+.person-figure {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  animation:personFloat 3s ease-in-out infinite;
+  position:relative;
+}
+
+.person-figure:nth-child(1){ animation-delay:0s; }
+.person-figure:nth-child(2){ animation-delay:0.7s; }
+.person-figure:nth-child(3){ animation-delay:1.4s; }
+.person-figure:nth-child(4){ animation-delay:2.1s; }
+
+@keyframes personFloat {
+  0%,100%{ transform:translateY(0) scale(1); }
+  50%{ transform:translateY(-12px) scale(1.02); }
+}
+
+.person-svg {
+  width:70px;
+  height:auto;
+  filter:drop-shadow(0 5px 15px rgba(0,123,255,0.25));
+}
+
+.hero-title-overlay {
+  position:absolute;
+  top:20px;left:0;right:0;
+  text-align:center;
+  z-index:5;
+  padding:0 16px;
+}
+
+.hero-title-overlay h2 {
+  font-family:'Orbitron',sans-serif;
+  font-size:20px;
+  font-weight:900;
+  background:linear-gradient(90deg,var(--c7),var(--c1),var(--c3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:1px;
+}
+
+.hero-title-overlay p {
+  font-size:12px;
+  color:var(--muted);
+  margin-top:5px;
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:2px;
+}
+
+/* Floating helper & channel buttons */
+.home-quick-links {
+  position:absolute;
+  top:55px; right:12px;
+  z-index:10;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.quick-link-btn {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 11px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all 0.3s;
+  backdrop-filter:blur(10px);
+  border:1px solid;
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:1px;
+}
+
+.quick-link-btn.channel {
+  background:rgba(0,123,255,0.1);
+  border-color:rgba(0,123,255,0.3);
+  color:var(--c7);
+  animation:channelPulse 2s ease-in-out infinite;
+}
+
+@keyframes channelPulse {
+  0%,100%{ box-shadow:0 0 8px rgba(0,123,255,0.2); }
+  50%{ box-shadow:0 0 18px rgba(0,123,255,0.4); }
+}
+
+.quick-link-btn.helper {
+  background:rgba(253,126,20,0.1);
+  border-color:rgba(253,126,20,0.3);
+  color:var(--c3);
+  animation:helperPulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes helperPulse {
+  0%,100%{ box-shadow:0 0 8px rgba(253,126,20,0.2); }
+  50%{ box-shadow:0 0 18px rgba(253,126,20,0.4); }
+}
+
+.quick-link-btn:hover { transform:scale(1.05); }
+
+.home-content { padding:16px; }
+
+.home-about {
+  background:linear-gradient(135deg, rgba(0,123,255,0.05), rgba(0,180,216,0.05));
+  border:1px solid rgba(0,123,255,0.15);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+  position:relative;
+  overflow:hidden;
+}
+
+.home-about h3 {
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;
+  color:var(--c7);
+  margin-bottom:10px;
+  letter-spacing:1px;
+}
+
+.home-about p {
+  font-size:13px;
+  color:var(--text);
+  line-height:1.7;
+  font-family:'Rajdhani',sans-serif;
+  font-size:14px;
+}
+
+.section-title {
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;
+  color:var(--c7);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.section-title::after {
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, rgba(0,123,255,0.2), transparent);
+}
+
+.vip-table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:500;
+  background:var(--bg2);
+}
+
+.vip-table th {
+  background:rgba(0,123,255,0.08);
+  color:var(--c7);
+  padding:8px 10px;
+  text-align:left;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-family:'Orbitron',sans-serif;
+}
+
+.vip-table th:first-child { border-radius:8px 0 0 8px; }
+.vip-table th:last-child { border-radius:0 8px 8px 0; }
+
+.vip-table td {
+  padding:8px 10px;
+  border-bottom:1px solid rgba(0,123,255,0.05);
+  color:var(--text);
+}
+
+.vip-table tr:hover td { background:rgba(0,123,255,0.02); }
+
+.vip-badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:10px;
+  font-size:10px;
+  font-weight:700;
+  font-family:'Orbitron',sans-serif;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position:fixed;
+  bottom:0;left:0;right:0;
+  z-index:100;
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:stretch;
+  height:65px;
+}
+
+.nav-item {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  cursor:pointer;
+  transition:all 0.3s;
+  position:relative;
+  padding:5px 0;
+}
+
+.nav-item.active .nav-icon { color:var(--c1); filter:drop-shadow(0 0 6px rgba(0,123,255,0.3)); }
+.nav-item.active .nav-label { color:var(--c1); }
+
+.nav-item:not(.active):hover .nav-icon { color:var(--c2); }
+
+.nav-item.active::after {
+  content:'';
+  position:absolute;
+  top:0;left:20%;right:20%;
+  height:2px;
+  background:var(--c1);
+  border-radius:0 0 4px 4px;
+  box-shadow:0 0 8px var(--c1);
+}
+
+.nav-icon {
+  font-size:22px;
+  color:var(--muted);
+  transition:all 0.3s;
+  line-height:1;
+}
+
+.nav-label {
+  font-size:9px;
+  color:var(--muted);
+  font-family:'Orbitron',sans-serif;
+  letter-spacing:0.5px;
+  transition:all 0.3s;
+}
+
+/* ── VIP TAB ── */
+.vip-header {
+  background:linear-gradient(135deg, #e3f2fd, #ffffff);
+  padding:20px 16px 16px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+}
+
+.vip-header h2 {
+  font-family:'Orbitron',sans-serif;
+  font-size:16px;
+  background:linear-gradient(90deg,var(--c7),var(--c1));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:2px;
+}
+
+/* Carousel */
+.vip-carousel-wrap {
+  position:relative;
+  overflow:hidden;
+  height:220px;
+  background:linear-gradient(180deg, #ffffff, #f4f7f6);
+}
+
+.vip-carousel-track {
+  display:flex;
+  position:absolute;
+  top:50%;
+  left:0;
+  transform:translateY(-50%);
+  transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+  gap:0;
+}
+
+.vip-carousel-item {
+  width:100vw;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  flex-shrink:0;
+}
+
+.vip-medicine-visual {
+  width:140px;
+  height:140px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.vip-medicine-visual .bottle-3d {
+  animation:bottle3D 4s ease-in-out infinite;
+}
+
+@keyframes bottle3D {
+  0%,100%{ transform:rotateY(0deg) translateY(0); }
+  25%{ transform:rotateY(20deg) translateY(-8px); }
+  50%{ transform:rotateY(0deg) translateY(-12px); }
+  75%{ transform:rotateY(-20deg) translateY(-8px); }
+}
+
+.carousel-controls {
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  padding:10px 0 6px;
+}
+
+.carousel-dot {
+  width:6px;height:6px;
+  border-radius:50%;
+  background:rgba(0,123,255,0.2);
+  cursor:pointer;
+  transition:all 0.3s;
+}
+
+.carousel-dot.active {
+  background:var(--c1);
+  width:18px;
+  border-radius:3px;
+  box-shadow:0 0 6px var(--c1);
+}
+
+.vip-cards { padding:16px; display:flex; flex-direction:column; gap:12px; }
+
+.vip-card {
+  background:var(--card);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  position:relative;
+  overflow:hidden;
+  transition:all 0.3s;
+  box-shadow:0 4px 15px rgba(0,123,255,0.03);
+}
+
+.vip-card:hover {
+  transform:translateX(4px);
+  border-color:var(--c1);
+}
+
+.vip-card-icon {
+  width:52px;height:52px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  flex-shrink:0;
+  position:relative;
+  overflow:hidden;
+}
+
+.vip-card-info { flex:1; min-width:0; }
+
+.vip-card-info h4 {
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;
+  color:var(--c7);
+  letter-spacing:1px;
+}
+
+.vip-card-info .medicine-name {
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  margin:2px 0;
+}
+
+.vip-card-info .medicine-use {
+  font-size:11px;
+  color:var(--muted);
+  font-family:'Rajdhani',sans-serif;
+}
+
+.vip-card-price {
+  text-align:right;
+  flex-shrink:0;
+}
+
+.vip-card-price .price {
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--c1);
+}
+
+.vip-card-price .daily {
+  font-size:10px;
+  color:var(--c3);
+  font-family:'Rajdhani',sans-serif;
+}
+
+.vip-card-price .duration {
+  font-size:9px;
+  color:var(--muted);
+  font-family:'Rajdhani',sans-serif;
+}
+
+/* ── WALLET TAB ── */
+.wallet-content { padding:16px; }
+
+.wallet-stats {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.stat-card {
+  background:var(--card);
+  border-radius:14px;
+  padding:14px;
+  border:1px solid var(--border);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 4px 15px rgba(0,0,0,0.02);
+}
+
+.stat-card::before {
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+}
+
+.stat-card.green::before { background:linear-gradient(90deg,var(--c1),var(--c2)); }
+.stat-card.orange::before { background:linear-gradient(90deg,var(--c3),var(--c4)); }
+.stat-card.purple::before { background:linear-gradient(90deg,var(--c5),var(--c6)); }
+.stat-card.blue::before { background:linear-gradient(90deg,var(--c2),var(--c7)); }
+
+.stat-card .stat-value {
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:4px;
+}
+
+.stat-card.green .stat-value { color:var(--c1); }
+.stat-card.orange .stat-value { color:var(--c3); }
+.stat-card.purple .stat-value { color:var(--c5); }
+.stat-card.blue .stat-value { color:var(--c7); }
+
+.stat-card .stat-label {
+  font-size:10px;
+  color:var(--muted);
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.wallet-actions-container {
+  display: flex;
+  gap: 10px;
+}
+
+.wallet-action-btn {
+  padding:18px 16px;
+  border-radius:16px;
+  border:none;
+  cursor:pointer;
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1px;
+  transition:all 0.3s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  color:#fff;
+  flex: 1;
+}
+
+.wallet-action-btn.deposit {
+  background:linear-gradient(135deg, #007bff, #0056b3);
+  border:1px solid rgba(0,123,255,0.3);
+}
+
+.wallet-action-btn.deposit:hover {
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,123,255,0.25);
+}
+
+.wallet-action-btn.withdraw {
+  background:linear-gradient(135deg, #fd7e14, #d94100);
+  border:1px solid rgba(253,126,20,0.3);
+}
+
+.wallet-action-btn.withdraw:hover {
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(253,126,20,0.25);
+}
+
+.wallet-action-btn .btn-icon { font-size:28px; }
+
+/* ── MODALS ── */
+.modal-overlay {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(8px);
+  z-index:200;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.modal-overlay.open { display:flex; }
+
+.modal-sheet {
+  background:var(--bg2);
+  border-radius:24px 24px 0 0;
+  padding:24px 20px 30px;
+  width:100%;
+  max-width:500px;
+  max-height:92vh;
+  overflow-y:auto;
+  border-top:1px solid var(--border);
+  animation:slideUp 0.3s ease;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+}
+
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+
+.modal-handle {
+  width:40px;height:4px;
+  background:rgba(0,0,0,0.1);
+  border-radius:2px;
+  margin:0 auto 20px;
+}
+
+.modal-title {
+  font-family:'Orbitron',sans-serif;
+  font-size:15px;
+  color:var(--c7);
+  letter-spacing:2px;
+  margin-bottom:20px;
+  text-align:center;
+}
+
+.close-modal {
+  position:absolute;
+  top:20px;right:20px;
+  background:rgba(0,0,0,0.05);
+  border:none;
+  color:var(--text);
+  width:32px;height:32px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* VIP Option buttons */
+.vip-options {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.vip-opt-btn {
+  padding:12px 8px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(0,123,255,0.02);
+  color:var(--text);
+  cursor:pointer;
+  font-family:'Rajdhani',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  text-align:center;
+  transition:all 0.3s;
+}
+
+.vip-opt-btn.selected {
+  border-color:var(--c1);
+  background:rgba(0,123,255,0.08);
+  color:var(--c1);
+}
+
+.bank-options { display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
+
+.bank-option {
+  background:rgba(0,123,255,0.02);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px 14px;
+  cursor:pointer;
+  transition:all 0.3s;
+}
+
+.bank-option.selected {
+  border-color:var(--c2);
+  background:rgba(0,180,216,0.05);
+}
+
+.bank-option-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
+
+.bank-name {
+  font-family:'Orbitron',sans-serif;
+  font-size:10px;
+  color:var(--c7);
+  letter-spacing:1px;
+}
+
+.bank-detail {
+  font-size:12px;
+  color:var(--muted);
+  font-family:'Rajdhani',sans-serif;
+  word-break:break-all;
+}
+
+.bank-account-num {
+  font-size:13px;
+  color:var(--text);
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;
+  letter-spacing:1px;
+  margin-top:3px;
+}
+
+.copy-btn {
+  background:rgba(0,123,255,0.1);
+  border:1px solid rgba(0,123,255,0.2);
+  color:var(--c7);
+  border-radius:8px;
+  padding:4px 10px;
+  font-size:10px;
+  font-family:'Orbitron',sans-serif;
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.copy-btn:hover { background:rgba(0,123,255,0.15); }
+
+.status-badge {
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:20px;
+  font-size:10px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.status-badge.waiting { background:rgba(253,126,20,0.15); color:var(--c3); border:1px solid rgba(253,126,20,0.3); }
+.status-badge.success { background:rgba(40,167,69,0.15); color:#28a745; border:1px solid rgba(40,167,69,0.3); }
+.status-badge.paid { background:rgba(0,123,255,0.15); color:var(--c1); border:1px solid rgba(0,123,255,0.3); }
+.status-badge.failed { background:rgba(220,53,69,0.15); color:#dc3545; border:1px solid rgba(220,53,69,0.3); }
+
+.btn-secondary {
+  width:100%;
+  padding:13px;
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:12px;
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.3s;
+}
+
+.btn-secondary:hover { border-color:var(--c1); color:var(--c1); }
+
+.info-box {
+  background:rgba(0,123,255,0.05);
+  border:1px solid rgba(0,123,255,0.2);
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:12px;
+  color:var(--c7);
+  margin-bottom:14px;
+  font-family:'Rajdhani',sans-serif;
+  line-height:1.5;
+}
+
+/* ── STATUS TAB ── */
+.status-content { padding:16px; }
+
+.status-filter {
+  display:flex;
+  gap:8px;
+  margin-bottom:16px;
+  overflow-x:auto;
+  padding-bottom:4px;
+}
+
+.filter-btn {
+  padding:7px 16px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--muted);
+  font-size:11px;
+  font-family:'Orbitron',sans-serif;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all 0.3s;
+}
+
+.filter-btn.active {
+  background:rgba(0,123,255,0.15);
+  border-color:var(--c1);
+  color:var(--c1);
+}
+
+.tx-list { display:flex; flex-direction:column; gap:8px; }
+
+.tx-item {
+  background:var(--card);
+  border-radius:14px;
+  padding:14px;
+  border:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.tx-icon {
+  width:40px;height:40px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  flex-shrink:0;
+}
+
+.tx-icon.deposit-icon { background:rgba(0,123,255,0.1); }
+.tx-icon.withdraw-icon { background:rgba(253,126,20,0.1); }
+.tx-icon.commission-icon { background:rgba(40,167,69,0.1); }
+
+.tx-info { flex:1; min-width:0; }
+
+.tx-type {
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+}
+
+.tx-date { font-size:10px; color:var(--muted); margin-top:2px; font-family:'Rajdhani',sans-serif; }
+
+.tx-amount-block { text-align:right; }
+
+.tx-amount {
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;
+  font-weight:700;
+}
+
+.tx-amount.positive { color:#28a745; }
+.tx-amount.negative { color:var(--c3); }
+
+.tx-detail { font-size:10px; color:var(--muted); margin-top:2px; font-family:'Rajdhani',sans-serif; }
+
+.empty-state {
+  text-align:center;
+  padding:50px 20px;
+  color:var(--muted);
+}
+
+.empty-state .empty-icon { font-size:50px; margin-bottom:12px; opacity:0.4; }
+.empty-state p { font-family:'Rajdhani',sans-serif; font-size:14px; }
+
+/* ── COMMUNITY TAB ── */
+.community-content { padding:16px; }
+
+.comm-stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.comm-stat {
+  background:var(--card);
+  border-radius:12px;
+  padding:12px 8px;
+  text-align:center;
+  border:1px solid var(--border);
+}
+
+.comm-stat .val {
+  font-family:'Orbitron',sans-serif;
+  font-size:16px;
+  font-weight:700;
+  color:var(--c1);
+}
+
+.comm-stat .lbl {
+  font-size:9px;
+  color:var(--muted);
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:1px;
+  margin-top:3px;
+}
+
+.invite-link-box {
+  background:rgba(0,123,255,0.05);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:18px;
+}
+
+.invite-link-box .il-label {
+  font-size:10px;
+  color:var(--c7);
+  font-family:'Orbitron',sans-serif;
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+
+.invite-link-display {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--bg3);
+  border-radius:10px;
+  padding:10px 12px;
+}
+
+.invite-link-display .link-text {
+  flex:1;
+  font-size:11px;
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  word-break:break-all;
+  min-width:0;
+}
+
+.referral-groups { display:flex; flex-direction:column; gap:12px; }
+
+.ref-group {
+  background:var(--card);
+  border-radius:14px;
+  padding:14px;
+  border:1px solid var(--border);
+}
+
+.ref-group-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.ref-group-badge {
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  padding:3px 10px;
+  border-radius:20px;
+}
+
+.ref-group-badge.a { background:rgba(40,167,69,0.15); color:#28a745; border:1px solid rgba(40,167,69,0.3); }
+.ref-group-badge.b { background:rgba(0,123,255,0.15); color:var(--c1); border:1px solid rgba(0,123,255,0.3); }
+.ref-group-badge.c { background:rgba(253,126,20,0.15); color:var(--c3); border:1px solid rgba(253,126,20,0.3); }
+
+.ref-commission-rate {
+  font-size:10px;
+  color:var(--muted);
+  font-family:'Rajdhani',sans-serif;
+}
+
+.ref-members { display:flex; flex-direction:column; gap:6px; }
+
+.ref-member {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  background:rgba(0,123,255,0.02);
+  border-radius:8px;
+}
+
+.ref-avatar {
+  width:30px;height:30px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:700;
+  font-family:'Orbitron',sans-serif;
+  flex-shrink:0;
+}
+
+.ref-member-info { flex:1; }
+.ref-member-email { font-size:11px; color:var(--text); font-family:'Rajdhani',sans-serif; }
+.ref-member-vip { font-size:9px; color:var(--muted); font-family:'Orbitron',sans-serif; }
+
+/* ── LUCKY WHEEL STYLES ── */
+.lucky-wheel-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0,123,255,0.05);
+}
+
+.wheel-header {
+  margin-bottom: 15px;
+}
+
+.wheel-header h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: var(--c7);
+  letter-spacing: 1px;
+}
+
+.wheel-header p {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.wheel-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+}
+
+.wheel-lights {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 4px dashed var(--c4);
+  animation: rotateLights 4s linear infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes rotateLights {
+  to { transform: rotate(360deg); }
+}
+
+.wheel-outer {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid var(--c7);
+  box-shadow: 0 5px 20px rgba(0,123,255,0.2);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg3);
+}
+
+.wheel-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
+  background: conic-gradient(
+    #007bff 0% 10%, #00b4d8 10% 20%,
+    #fd7e14 20% 30%, #ffc107 30% 40%,
+    #e83e8c 40% 50%, #6f42c1 50% 60%,
+    #0056b3 60% 70%, #20c997 70% 80%,
+    #17a2b8 80% 90%, #28a745 90% 100%
+  );
+}
+
+.wheel-segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  left: 50%;
+  top: 50%;
+  transform-origin: 0% 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel-segment span {
+  position: absolute;
+  transform: rotate(18deg) translate(40px);
+  color: #fff;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 24px solid var(--c3);
+  z-index: 10;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.wheel-center {
+  position: absolute;
+  inset: 90px;
+  background: var(--bg2);
+  border: 4px solid var(--c7);
+  border-radius: 50%;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c7);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.spin-btn-wrap {
+  margin-top: 20px;
+}
+
+.spin-count-badge {
+  display: inline-block;
+  background: var(--c3);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ── ACCOUNT TAB ── */
+.account-content { padding:16px; }
+
+.account-profile {
+  background:linear-gradient(135deg, rgba(0,123,255,0.08), rgba(0,180,216,0.08));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.account-avatar {
+  width:70px;height:70px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--c1),var(--c2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  margin:0 auto 12px;
+  box-shadow:0 0 20px rgba(0,123,255,0.2);
+}
+
+.account-name {
+  font-family:'Orbitron',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:1px;
+}
+
+.account-email { font-size:12px; color:var(--muted); margin-top:4px; font-family:'Rajdhani',sans-serif; }
+
+.account-id {
+  background:rgba(0,123,255,0.05);
+  border-radius:8px;
+  padding:6px 14px;
+  display:inline-block;
+  margin-top:10px;
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;
+  color:var(--c7);
+  letter-spacing:2px;
+}
+
+.account-sections { display:flex; flex-direction:column; gap:12px; }
+
+.account-section {
+  background:var(--card);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid var(--border);
+}
+
+.account-section-title {
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;
+  color:var(--c7);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.bank-type-tabs {
+  display:flex;
+  gap:8px;
+  margin-bottom:14px;
+}
+
+.bank-type-tab {
+  flex:1;
+  padding:8px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--muted);
+  font-family:'Orbitron',sans-serif;
+  font-size:10px;
+  cursor:pointer;
+  transition:all 0.3s;
+  text-align:center;
+}
+
+.bank-type-tab.active {
+  background:rgba(0,123,255,0.1);
+  border-color:var(--c1);
+  color:var(--c1);
+}
+
+.download-btn {
+  width:100%;
+  padding:14px;
+  background:linear-gradient(135deg, var(--c6), var(--c7));
+  border:none;
+  border-radius:12px;
+  color:#fff;
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:all 0.3s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  text-transform:uppercase;
+}
+
+.logout-btn {
+  width:100%;
+  padding:14px;
+  background:rgba(220,53,69,0.05);
+  border:1px solid rgba(220,53,69,0.2);
+  border-radius:12px;
+  color:#dc3545;
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:all 0.3s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  text-transform:uppercase;
+}
+
+.logout-btn:hover {
+  background:rgba(220,53,69,0.1);
+}
+
+/* ── TOAST ── */
+.toast {
+  position:fixed;
+  top:80px;
+  left:50%;
+  transform:translateX(-50%) translateY(-20px);
+  background:var(--bg2);
+  border:1px solid var(--c1);
+  color:var(--c1);
+  padding:10px 20px;
+  border-radius:20px;
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;
+  letter-spacing:1px;
+  z-index:999;
+  opacity:0;
+  transition:all 0.3s;
+  white-space:nowrap;
+  backdrop-filter:blur(10px);
+  box-shadow:0 5px 20px rgba(0,123,255,0.15);
+}
+
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+.toast.error { border-color:#dc3545; color:#dc3545; box-shadow:0 5px 20px rgba(220,53,69,0.15); }
+
+/* ── LOADING ── */
+.loading-screen {
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  z-index:999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+}
+
+.loading-logo {
+  font-family:'Orbitron',sans-serif;
+  font-size:24px;
+  font-weight:900;
+  background:linear-gradient(90deg,var(--c7),var(--c1),var(--c3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:2px;
+}
+
+.loading-bar-wrap {
+  width:200px;
+  height:3px;
+  background:rgba(0,123,255,0.1);
+  border-radius:2px;
+  overflow:hidden;
+}
+
+.loading-bar {
+  height:100%;
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  border-radius:2px;
+  animation:loadBar 1.5s ease-out forwards;
+}
+
+@keyframes loadBar { from{width:0} to{width:100%} }
+
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(0,123,255,0.2); border-radius:2px; }
+
+.particles {
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.particle {
+  position:absolute;
+  border-radius:50%;
+  animation:particleFloat linear infinite;
+}
+@keyframes particleFloat {
+  0%{ transform:translateY(0) translateX(0); opacity:0; }
+  10%{ opacity:1; }
+  90%{ opacity:1; }
+  100%{ transform:translateY(-100px) translateX(20px); opacity:0; }
+}
+</style>
+
+<!-- Firebase Compat (v8 namespace) Libraries (Fixes ES Modules / Script type="module" issues on file:// protocol) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div style="font-size:70px;animation:leafPulse 1s infinite">🌿</div>
+  <div class="loading-logo">AGRO PESTSAFE</div>
+  <div style="font-family:'Rajdhani',sans-serif;font-size:12px;color:var(--muted);letter-spacing:3px">WEALTH PLATFORM</div>
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== AUTH: REGISTER ===== -->
+<div class="auth-screen" id="registerScreen" style="display:none">
+  <div class="auth-logo">
+    <span class="leaf-icon">🌿</span>
+    <h1>AGRO PESTSAFE WEALTH</h1>
+    <p>Agricultural Investment Platform</p>
+  </div>
+  <div class="auth-card">
+    <h2>CREATE ACCOUNT</h2>
+    <div class="inv-note" id="invNoteReg" style="display:none">🔗 Invitation code detected!</div>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="regName" placeholder="Your full name"/>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="regEmail" placeholder="your@email.com"/>
+    </div>
+    <div class="form-group">
+      <label>Password (6 digits + 2 letters)</label>
+      <input type="password" id="regPassword" placeholder="e.g. 123456ab" maxlength="8"/>
+    </div>
+    <div class="form-group">
+      <label>Withdrawal PIN (6 digits)</label>
+      <input type="password" id="regPin" placeholder="6-digit PIN" maxlength="6"/>
+    </div>
+    <div class="form-group">
+      <label>Invitation Code (Mandatory)</label>
+      <input type="text" id="regInvCode" placeholder="Invitation code is required" readonly/>
+    </div>
+    <button class="btn-primary" onclick="handleRegister()">REGISTER</button>
+    <div class="auth-switch">Already have an account? <span onclick="showLogin()">Login here</span></div>
+  </div>
+</div>
+
+<!-- ===== AUTH: LOGIN ===== -->
+<div class="auth-screen" id="loginScreen">
+  <div class="auth-logo">
+    <span class="leaf-icon">🌿</span>
+    <h1>AGRO PESTSAFE WEALTH</h1>
+    <p>Agricultural Investment Platform</p>
+  </div>
+  <div class="auth-card">
+    <h2>WELCOME BACK</h2>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="your@email.com"/>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="Your password"/>
+    </div>
+    <button class="btn-primary" onclick="handleLogin()">LOGIN</button>
+    <div class="auth-switch">New here? <span onclick="showRegister()">Create account</span></div>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div class="app" id="mainApp">
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-logo">🌿 APW</div>
+    <div class="top-bar-balance">
+      <span class="label">BALANCE</span>
+      <span class="amount" id="topBalance">$0.00</span>
+    </div>
+    <div class="top-bar-right">
+      <div class="top-bar-vip" id="topVip">VIP0</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== HOME TAB ===== -->
+    <div class="tab-pane active" id="tab-home">
+      <div class="home-hero">
+        <div class="home-quick-links">
+          <a href="https://t.me/agropastesafewealth" target="_blank" class="quick-link-btn channel">
+            <span>📢</span> Channel
+          </a>
+          <a href="https://t.me/nihiyaservice" target="_blank" class="quick-link-btn helper">
+            <span>🧑‍💼</span> Helper
+          </a>
+        </div>
+
+        <div class="hero-title-overlay">
+          <h2>🌿 AGRO PESTSAFE WEALTH</h2>
+          <p>AGRICULTURAL INVESTMENT PLATFORM</p>
+        </div>
+
+        <div class="particles" id="particles"></div>
+
+        <!-- Person figures scene -->
+        <div class="hero-3d-scene">
+          <div class="person-figure">
+            <svg class="person-svg" width="70" height="130" viewBox="0 0 70 130">
+              <circle cx="35" cy="18" r="13" fill="#f4c08e"/>
+              <ellipse cx="35" cy="7" rx="16" ry="4" fill="#0056b3"/>
+              <rect x="22" y="3" width="26" height="8" rx="3" fill="#007bff"/>
+              <rect x="20" y="32" width="30" height="42" rx="8" fill="#007bff"/>
+              <rect x="5" y="34" width="16" height="8" rx="4" fill="#007bff"/>
+              <rect x="49" y="34" width="16" height="8" rx="4" fill="#007bff"/>
+              <rect x="0" y="38" width="10" height="22" rx="3" fill="#fd7e14"/>
+              <rect x="22" y="72" width="10" height="35" rx="5" fill="#0056b3"/>
+              <rect x="38" y="72" width="10" height="35" rx="5" fill="#0056b3"/>
+              <rect x="19" y="102" width="16" height="10" rx="4" fill="#333"/>
+              <rect x="35" y="102" width="16" height="10" rx="4" fill="#333"/>
+              <ellipse cx="35" cy="125" rx="20" ry="3" fill="rgba(0,123,255,0.15)"/>
+            </svg>
+          </div>
+
+          <div class="person-figure">
+            <svg class="person-svg" width="70" height="130" viewBox="0 0 70 130">
+              <circle cx="35" cy="18" r="13" fill="#c8956a"/>
+              <ellipse cx="35" cy="7" rx="16" ry="4" fill="#8b4513"/>
+              <rect x="22" y="3" width="26" height="8" rx="3" fill="#a0522d"/>
+              <rect x="20" y="32" width="30" height="42" rx="8" fill="#fd7e14"/>
+              <rect x="5" y="34" width="16" height="8" rx="4" fill="#fd7e14"/>
+              <rect x="49" y="34" width="16" height="8" rx="4" fill="#fd7e14"/>
+              <rect x="56" y="28" width="12" height="30" rx="4" fill="#ffc107"/>
+              <line x1="68" y1="44" x2="74" y2="38" stroke="#ffc107" stroke-width="2"/>
+              <circle cx="74" cy="37" r="3" fill="#007bff"/>
+              <rect x="22" y="72" width="10" height="35" rx="5" fill="#5c1a00"/>
+              <rect x="38" y="72" width="10" height="35" rx="5" fill="#5c1a00"/>
+              <rect x="19" y="102" width="16" height="10" rx="4" fill="#222"/>
+              <rect x="35" y="102" width="16" height="10" rx="4" fill="#222"/>
+              <ellipse cx="35" cy="125" rx="20" ry="3" fill="rgba(253,126,20,0.15)"/>
+            </svg>
+          </div>
+        </div>
+
+        <div style="position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(0deg,rgba(0,123,255,0.05),transparent)"></div>
+      </div>
+
+      <div class="home-content">
+        <div class="home-about">
+          <h3>🌱 ABOUT THE PLATFORM</h3>
+          <p>Agro Pestsafe Wealth is a pioneering agricultural investment platform that collaborates with leading pesticide manufacturers worldwide. By participating in our profit-sharing program, you become a permanent partner in the global agrochemical trade. Invest in real pesticide products and earn daily returns while contributing to sustainable agriculture.</p>
+        </div>
+
+        <div class="home-about" style="background:linear-gradient(135deg,rgba(255,193,7,0.05),rgba(253,126,20,0.05));border-color:rgba(255,193,7,0.15)">
+          <h3 style="color:var(--c3)">💰 HOW IT WORKS</h3>
+          <p>Choose your VIP investment level (VIP1–VIP10), partner with top agro-chemical companies, and earn 4% daily returns for 365 days. Invite friends and earn referral commissions up to 8% on deposits and 3% on their daily earnings — automatically credited to your balance.</p>
+        </div>
+
+        <div class="section-title">📊 Investment Levels</div>
+        <div style="overflow-x:auto;border-radius:12px;border:1px solid rgba(0,123,255,0.1)">
+          <table class="vip-table">
+            <thead>
+              <tr>
+                <th>Level</th>
+                <th>Product</th>
+                <th>Min. Invest</th>
+                <th>Daily %</th>
+              </tr>
+            </thead>
+            <tbody id="homeVipTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIP TAB ===== -->
+    <div class="tab-pane" id="tab-vip">
+      <div class="vip-header">
+        <h2>💎 VIP INVESTMENT LEVELS</h2>
+        <p style="font-size:12px;color:var(--muted);font-family:'Rajdhani',sans-serif;margin-top:4px;letter-spacing:1px">Earn 4% Daily Returns • 365 Days</p>
+      </div>
+
+      <div class="vip-carousel-wrap">
+        <div class="vip-carousel-track" id="carouselTrack"></div>
+      </div>
+      <div class="carousel-controls" id="carouselDots"></div>
+
+      <!-- VIP Activation Area -->
+      <div style="padding:0 16px 16px;">
+        <div class="account-section" style="background:rgba(0,123,255,0.03);text-align:center;">
+          <h4 style="font-family:'Orbitron',sans-serif;font-size:13px;color:var(--c7);margin-bottom:8px;">🔓 ACTIVATE VIP LEVEL</h4>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;font-family:'Rajdhani',sans-serif;">Activate a VIP level corresponding to your balance. Upon activation, your account balance will be utilized (reset to zero) to fund the VIP lock, generating daily profit every 24 hours.</p>
+          <div class="form-group" style="max-width:280px;margin:0 auto 12px;">
+            <select id="vipActivateSelect" style="text-align:center;font-weight:600;"></select>
+          </div>
+          <button class="btn-primary" style="max-width:280px;margin:0 auto;" onclick="handleUnlockVip()">ACTIVATE VIP NOW</button>
+        </div>
+      </div>
+
+      <div class="vip-cards" id="vipCards"></div>
+    </div>
+
+    <!-- ===== WALLET TAB ===== -->
+    <div class="tab-pane" id="tab-wallet">
+      <div style="padding:20px 16px 10px;background:linear-gradient(135deg,#e3f2fd,#ffffff)">
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:16px;color:var(--c7);letter-spacing:2px">💳 WALLET</h2>
+      </div>
+      <div class="wallet-content">
+        <div class="wallet-stats">
+          <div class="stat-card green">
+            <div class="stat-value" id="walletBalance">$0.00</div>
+            <div class="stat-label">Balance</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-value" id="walletEarned">$0.00</div>
+            <div class="stat-label">Total Earned</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-value" id="walletDeposited">$0.00</div>
+            <div class="stat-label">Deposited</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-value" id="walletWithdrawn">$0.00</div>
+            <div class="stat-label">Withdrawn</div>
+          </div>
+        </div>
+
+        <div class="wallet-actions-container">
+          <button class="wallet-action-btn deposit" onclick="openDepositModal()">
+            <span class="btn-icon">💰</span>
+            DEPOSIT
+          </button>
+          <button class="wallet-action-btn withdraw" onclick="openWithdrawModal()">
+            <span class="btn-icon">💸</span>
+            WITHDRAW
+          </button>
+        </div>
+
+        <div class="section-title" style="margin-top:20px;">💎 Recent Transactions</div>
+        <div id="walletTxList" class="tx-list">
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>No transactions yet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STATUS TAB ===== -->
+    <div class="tab-pane" id="tab-status">
+      <div style="padding:20px 16px 10px;background:linear-gradient(135deg,#e3f2fd,#ffffff)">
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:16px;color:var(--c1);letter-spacing:2px">📋 STATUS</h2>
+      </div>
+      <div class="status-content">
+        <div class="status-filter">
+          <button class="filter-btn active" onclick="filterTx('all',this)">All</button>
+          <button class="filter-btn" onclick="filterTx('deposit',this)">Deposits</button>
+          <button class="filter-btn" onclick="filterTx('withdraw',this)">Withdrawals</button>
+          <button class="filter-btn" onclick="filterTx('commission',this)">Commission</button>
+        </div>
+        <div class="tx-list" id="statusTxList">
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <p>No records found</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== COMMUNITY TAB ===== -->
+    <div class="tab-pane" id="tab-community">
+      <div style="padding:20px 16px 10px;background:linear-gradient(135deg,#e3f2fd,#ffffff)">
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:16px;color:var(--c7);letter-spacing:2px">👥 COMMUNITY</h2>
+      </div>
+      <div class="community-content">
+
+        <!-- LUCKY WHEEL SPINNING SECTION -->
+        <div class="lucky-wheel-section">
+          <div class="wheel-header">
+            <h3>🎁 LUCKY WHEEL SPINS</h3>
+            <p>Refer friends to join a VIP level to earn a guaranteed cash spin!</p>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <span class="spin-count-badge" id="spinCountText">Available Spins: 0</span>
+          </div>
+
+          <div class="wheel-container">
+            <div class="wheel-lights"></div>
+            <div class="wheel-pointer"></div>
+            <div class="wheel-outer">
+              <div class="wheel-inner" id="wheelInner">
+                <div class="wheel-segment" style="transform: rotate(0deg) translate(-50%, -50%);"><span>$1</span></div>
+                <div class="wheel-segment" style="transform: rotate(36deg) translate(-50%, -50%);"><span>$2</span></div>
+                <div class="wheel-segment" style="transform: rotate(72deg) translate(-50%, -50%);"><span>$3</span></div>
+                <div class="wheel-segment" style="transform: rotate(108deg) translate(-50%, -50%);"><span>$4</span></div>
+                <div class="wheel-segment" style="transform: rotate(144deg) translate(-50%, -50%);"><span>$5</span></div>
+                <div class="wheel-segment" style="transform: rotate(180deg) translate(-50%, -50%);"><span>$6</span></div>
+                <div class="wheel-segment" style="transform: rotate(216deg) translate(-50%, -50%);"><span>$7</span></div>
+                <div class="wheel-segment" style="transform: rotate(252deg) translate(-50%, -50%);"><span>$8</span></div>
+                <div class="wheel-segment" style="transform: rotate(288deg) translate(-50%, -50%);"><span>$9</span></div>
+                <div class="wheel-segment" style="transform: rotate(324deg) translate(-50%, -50%);"><span>$10</span></div>
+              </div>
+              <div class="wheel-center">WIN</div>
+            </div>
+          </div>
+
+          <div class="spin-btn-wrap">
+            <button class="btn-primary" id="spinActionBtn" style="max-width:200px;margin:0 auto;" onclick="triggerLuckyWheel()">SPIN NOW</button>
+          </div>
+        </div>
+
+        <div class="comm-stats">
+          <div class="comm-stat">
+            <div class="val" id="commTotalRef">0</div>
+            <div class="lbl">Total Refs</div>
+          </div>
+          <div class="comm-stat">
+            <div class="val" id="commTotalComm">$0</div>
+            <div class="lbl">Commission</div>
+          </div>
+          <div class="comm-stat">
+            <div class="val" id="commActiveRef">0</div>
+            <div class="lbl">Active</div>
+          </div>
+        </div>
+
+        <div class="invite-link-box">
+          <div class="il-label">🔗 YOUR INVITATION LINK</div>
+          <div class="invite-link-display">
+            <span class="link-text" id="inviteLinkDisplay">Loading...</span>
+            <button class="copy-btn" onclick="copyInviteLink()">Copy</button>
+          </div>
+        </div>
+
+        <div class="section-title">👥 Referral Groups</div>
+        <div class="referral-groups" id="referralGroups">
+          <div class="ref-group">
+            <div class="ref-group-header">
+              <span class="ref-group-badge a">Group A</span>
+              <span class="ref-commission-rate">Deposit 8% | Daily 3%</span>
+            </div>
+            <div class="ref-members" id="groupA"><p style="color:var(--muted);font-size:12px;font-family:'Rajdhani',sans-serif;padding:8px 0">No members yet</p></div>
+          </div>
+          <div class="ref-group">
+            <div class="ref-group-header">
+              <span class="ref-group-badge b">Group B</span>
+              <span class="ref-commission-rate">Deposit 1% | Daily 1%</span>
+            </div>
+            <div class="ref-members" id="groupB"><p style="color:var(--muted);font-size:12px;font-family:'Rajdhani',sans-serif;padding:8px 0">No members yet</p></div>
+          </div>
+          <div class="ref-group">
+            <div class="ref-group-header">
+              <span class="ref-group-badge c">Group C</span>
+              <span class="ref-commission-rate">Deposit 1% | Daily 1%</span>
+            </div>
+            <div class="ref-members" id="groupC"><p style="color:var(--muted);font-size:12px;font-family:'Rajdhani',sans-serif;padding:8px 0">No members yet</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ACCOUNT TAB ===== -->
+    <div class="tab-pane" id="tab-account">
+      <div style="padding:20px 16px 10px;background:linear-gradient(135deg,#e3f2fd,#ffffff)">
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:16px;color:var(--c7);letter-spacing:2px">👤 ACCOUNT</h2>
+      </div>
+      <div class="account-content">
+
+        <!-- Profile -->
+        <div class="account-profile">
+          <div class="account-avatar">🌿</div>
+          <div class="account-name" id="accName">—</div>
+          <div class="account-email" id="accEmail">—</div>
+          <div class="account-id" id="accId">ID: ——————</div>
+          <div style="margin-top:10px">
+            <span class="top-bar-vip" style="font-size:12px;padding:4px 14px" id="accVip">VIP0</span>
+          </div>
+        </div>
+
+        <div class="account-sections">
+          <!-- Bank Account -->
+          <div class="account-section">
+            <div class="account-section-title">🏦 Bank Account Settings</div>
+            <div class="bank-type-tabs">
+              <button class="bank-type-tab active" onclick="setBankTab('trc20',this)">TRC20</button>
+              <button class="bank-type-tab" onclick="setBankTab('cbe',this)">CBE</button>
+            </div>
+            <div id="bankTrc20Section">
+              <div class="form-group">
+                <label>TRC20 Wallet Address</label>
+                <input type="text" id="trc20Address" placeholder="T..."/>
+              </div>
+              <button class="btn-primary" style="margin-top:4px" onclick="saveBankInfo('trc20')">💾 SAVE TRC20</button>
+            </div>
+            <div id="bankCbeSection" style="display:none">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="cbeName" placeholder="Account holder name"/>
+              </div>
+              <div class="form-group">
+                <label>CBE Account Number</label>
+                <input type="text" id="cbeAccount" placeholder="CBE account number"/>
+              </div>
+              <button class="btn-primary" style="margin-top:4px" onclick="saveBankInfo('cbe')">💾 SAVE CBE</button>
+            </div>
+          </div>
+
+          <!-- Change Withdrawal PIN -->
+          <div class="account-section">
+            <div class="account-section-title">🔐 Change Withdrawal PIN</div>
+            <div class="form-group">
+              <label>Current PIN</label>
+              <input type="password" id="oldPin" placeholder="Current 6-digit PIN" maxlength="6"/>
+            </div>
+            <div class="form-group">
+              <label>New PIN</label>
+              <input type="password" id="newPin" placeholder="New 6-digit PIN" maxlength="6"/>
+            </div>
+            <button class="btn-primary" onclick="changePin()">🔄 UPDATE PIN</button>
+          </div>
+
+          <!-- Change Password -->
+          <div class="account-section">
+            <div class="account-section-title">🔑 Change Password</div>
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" id="oldPassword" placeholder="Current password"/>
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="newPassword" placeholder="New password (6 digits + 2 letters)"/>
+            </div>
+            <button class="btn-primary" onclick="changePassword()">🔄 UPDATE PASSWORD</button>
+          </div>
+
+          <!-- Download App -->
+          <div class="account-section">
+            <div class="account-section-title">📱 App Download</div>
+            <p style="font-size:12px;color:var(--muted);font-family:'Rajdhani',sans-serif;margin-bottom:12px">Download the Agro Pestsafe Wealth mobile app for the best experience.</p>
+            <button class="download-btn" onclick="downloadApp()">
+              <span>📥</span> DOWNLOAD APK
+            </button>
+          </div>
+
+          <!-- Logout -->
+          <button class="logout-btn" onclick="handleLogout()">
+            <span>🚪</span> LOGOUT
+          </button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /content -->
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('home',this)">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-label">Home</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('vip',this)">
+      <div class="nav-icon">💎</div>
+      <div class="nav-label">VIP</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('wallet',this)">
+      <div class="nav-icon">💳</div>
+      <div class="nav-label">Wallet</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('status',this)">
+      <div class="nav-icon">📋</div>
+      <div class="nav-label">Status</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('community',this)">
+      <div class="nav-icon">👥</div>
+      <div class="nav-label">Community</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('account',this)">
+      <div class="nav-icon">👤</div>
+      <div class="nav-label">Account</div>
+    </div>
+  </div>
+</div><!-- /mainApp -->
+
+<!-- ===== DEPOSIT MODAL ===== -->
+<div class="modal-overlay" id="depositModal">
+  <div class="modal-sheet" style="position:relative">
+    <div class="modal-handle"></div>
+    <button class="close-modal" onclick="closeModal('depositModal')">✕</button>
+    <div class="modal-title">💰 DEPOSIT FUNDS</div>
+
+    <div class="info-box">⚡ Exchange Rate: 1$ = 130 ETB</div>
+
+    <div class="section-title" style="font-size:11px">Select VIP Level</div>
+    <div class="vip-options" id="vipOptions"></div>
+
+    <div class="section-title" style="font-size:11px;margin-top:4px">Select Payment Method</div>
+    <div class="bank-options">
+      <div class="bank-option" id="bankOptTRC" onclick="selectBank('trc20')">
+        <div class="bank-option-header">
+          <span class="bank-name">TRC20 USDT</span>
+          <button class="copy-btn" onclick="event.stopPropagation();copyText('TABVopBzuKpKTBvpG6Tb9vyTPLJMzmTG1k')">Copy</button>
+        </div>
+        <div class="bank-detail">Address:</div>
+        <div class="bank-account-num">TABVopBzuKpKTBvpG6Tb9vyTPLJMzmTG1k</div>
+      </div>
+      <div class="bank-option" id="bankOptCBE" onclick="selectBank('cbe')">
+        <div class="bank-option-header">
+          <span class="bank-name">CBE (Commercial Bank)</span>
+          <button class="copy-btn" onclick="event.stopPropagation();copyText('1000740571579')">Copy</button>
+        </div>
+        <div class="bank-detail">Account Holder: MR YCHILAL NIBRET ALEMU</div>
+        <div class="bank-account-num">1000740571579</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Amount (USD)</label>
+      <input type="number" id="depositAmount" placeholder="Enter amount"/>
+    </div>
+    <div class="form-group">
+      <label>FT Transaction Number</label>
+      <input type="text" id="depositTxNum" placeholder="Transaction reference number"/>
+    </div>
+    <button class="btn-primary" onclick="submitDeposit()">✅ SUBMIT DEPOSIT</button>
+    <div id="depositStatus" style="margin-top:12px;text-align:center"></div>
+  </div>
+</div>
+
+<!-- ===== WITHDRAW MODAL ===== -->
+<div class="modal-overlay" id="withdrawModal">
+  <div class="modal-sheet" style="position:relative">
+    <div class="modal-handle"></div>
+    <button class="close-modal" onclick="closeModal('withdrawModal')">✕</button>
+    <div class="modal-title">💸 WITHDRAW FUNDS</div>
+
+    <div class="info-box" id="withdrawInfo">
+      ⚠️ Minimum withdrawal: $3.00<br>
+      💸 Withdrawal fee: 10%<br>
+      🚫 Sunday withdrawals are NOT allowed
+    </div>
+
+    <div class="form-group">
+      <label>Withdrawal Amount (USD)</label>
+      <input type="number" id="withdrawAmount" placeholder="Min. $3.00" min="3" oninput="calcWithdrawFee()"/>
+    </div>
+
+    <div id="feeCalcBox" style="display:none;background:rgba(0,123,255,0.06);border:1px solid rgba(0,123,255,0.2);border-radius:10px;padding:12px;margin-bottom:14px;font-family:'Rajdhani',sans-serif;font-size:13px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="color:var(--muted)">Amount Requested:</span>
+        <span id="fcAmount" style="color:var(--text)">$0.00</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="color:var(--muted)">Fee (10%):</span>
+        <span id="fcFee" style="color:var(--c3)">-$0.00</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(0,123,255,0.08);padding-top:6px;margin-top:4px">
+        <span style="color:var(--c2);font-weight:700">You Receive:</span>
+        <span id="fcNet" style="color:var(--c1);font-family:'Orbitron',sans-serif;font-weight:700">$0.00</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Withdrawal PIN</label>
+      <input type="password" id="withdrawPin" placeholder="Your 6-digit PIN" maxlength="6"/>
+    </div>
+    <button class="btn-primary" onclick="submitWithdraw()">✅ SUBMIT WITHDRAWAL</button>
+    <div id="withdrawStatus" style="margin-top:12px;text-align:center"></div>
+  </div>
+</div>
+
+<script>
+// ─── LOCAL APP DATABASE INSTANCE ───
+var db = null;
+var storage = null;
+var urlParams = null;
+
+// Safe URL Parameter Parser (100% compatible with older engines, replaces URLSearchParams)
+function getQueryParam(name) {
+  var search = window.location.search.substring(1);
+  if (!search) return null;
+  var parts = search.split('&');
+  for (var i = 0; i < parts.length; i++) {
+    var pair = parts[i].split('=');
+    if (pair[0] === name) {
+      return decodeURIComponent(pair[1]);
+    }
+  }
+  return null;
+}
+
+// Deep Object assignment helper (100% compatible with older WebViews, replaces Object.assign)
+function assignObj(target, source) {
+  for (var key in source) {
+    if (source.hasOwnProperty(key)) {
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+
+function initFirebaseConnection() {
+  if (typeof firebase !== 'undefined') {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    storage = firebase.storage();
+    urlParams = getQueryParam('ref'); // Instantiated via safe fallback
+    
+    // Auto-run UI setup after loading screen finishes
+    setTimeout(function() {
+      var loading = document.getElementById('loadingScreen');
+      if (loading) {
+        loading.style.opacity = '0';
+        loading.style.transition = 'opacity 0.5s';
+        setTimeout(function() {
+          loading.style.display = 'none';
+        }, 500);
+      }
+    }, 1800);
+  } else {
+    // Retry if CDN script load is lagging
+    setTimeout(initFirebaseConnection, 100);
+  }
+}
+
+// ─── DATA ───────────────────────────────────────────────────────
+window.VIP_LEVELS = [
+  { level:1, name:'Glyphosate', minInvest:15, daily:4, days:365, use:'Broad-spectrum systemic herbicide for weed control', color:'#007bff', emoji:'🧪' },
+  { level:2, name:'Mancozeb', minInvest:30, daily:4, days:365, use:'Fungicide protecting crops from blight & rust diseases', color:'#00b4d8', emoji:'🔬' },
+  { level:3, name:'Cypermethrin', minInvest:45, daily:4, days:365, use:'Pyrethroid insecticide for pest & insect control', color:'#fd7e14', emoji:'⚗️' },
+  { level:4, name:'Metalaxyl', minInvest:60, daily:4, days:365, use:'Systemic fungicide against downy mildew & pythium', color:'#ffc107', emoji:'🧫' },
+  { level:5, name:'Diazinon', minInvest:120, daily:4, days:365, use:'Organophosphate insecticide for soil pests', color:'#e83e8c', emoji:'🌡️' },
+  { level:6, name:'2,4-D', minInvest:240, daily:4, days:365, use:'Selective herbicide controlling broadleaf weeds in cereals', color:'#6f42c1', emoji:'🧬' },
+  { level:7, name:'Chlorpyrifos', minInvest:300, daily:4, days:365, use:'Organophosphate controlling borers, aphids & nematodes', color:'#0056b3', emoji:'💊' },
+  { level:8, name:'Copper Oxychloride', minInvest:600, daily:4, days:365, use:'Contact fungicide/bactericide for foliar diseases', color:'#20c997', emoji:'🟦' },
+  { level:9, name:'Abamectin', minInvest:1000, daily:4, days:365, use:'Macrolide insecticide/acaricide for mites & leafminers', color:'#17a2b8', emoji:'💎' },
+  { level:10, name:'Carbaryl', minInvest:10000, daily:4, days:365, use:'Carbamate insecticide with broad-spectrum pest control', color:'#28a745', emoji:'👑' },
+];
+
+// ─── STATE ──────────────────────────────────────────────────────
+var currentUser = null;
+var currentUID = null;
+var userData = {};
+var selectedVipLevel = null;
+var selectedBank = null;
+var currentTxFilter = 'all';
+var isSpinning = false;
+
+// ─── HELPERS ────────────────────────────────────────────────────
+window.showToast = function(msg, isErr) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isErr ? ' error' : '') + ' show';
+  setTimeout(function() {
+    t.className = 'toast';
+  }, 2500);
+};
+
+window.copyText = function(text) {
+  navigator.clipboard.writeText(text).then(function() {
+    showToast('✅ Copied!');
+  });
+};
+
+function formatDate(ts) {
+  if(!ts) return '—';
+  var d = new Date(ts);
+  return d.toLocaleDateString()+' '+d.toLocaleTimeString();
+}
+
+function generateUserId() {
+  return Math.floor(100000+Math.random()*900000).toString();
+}
+
+function validatePassword(pw) {
+  var digits = pw.replace(/[^0-9]/g,'').length;
+  var letters = pw.replace(/[^a-zA-Z]/g,'').length;
+  return pw.length===8 && digits===6 && letters===2;
+}
+
+// ─── PARTICLES ──────────────────────────────────────────────────
+function createParticles() {
+  var container = document.getElementById('particles');
+  var colors = ['#007bff','#00b4d8','#fd7e14','#ffc107','#e83e8c'];
+  for(var i=0;i<18;i++){
+    var p = document.createElement('div');
+    p.className='particle';
+    var size = Math.random()*4+2;
+    p.style.cssText = 'width:' + size + 'px;height:' + size + 'px;background:' + colors[Math.floor(Math.random()*colors.length)] + ';left:' + Math.random()*100 + '%;bottom:' + Math.random()*30 + '%;animation-duration:' + (3+Math.random()*4) + 's;animation-delay:' + Math.random()*5 + 's;opacity:0;';
+    container.appendChild(p);
+  }
+}
+
+// ─── BUILD UI ───────────────────────────────────────────────────
+function buildHomeTable() {
+  var tbody = document.getElementById('homeVipTable');
+  tbody.innerHTML = VIP_LEVELS.map(function(v) {
+    return '<tr>' +
+      '<td><span class="vip-badge" style="background:' + v.color + '22;color:' + v.color + ';border:1px solid ' + v.color + '44">VIP' + v.level + '</span></td>' +
+      '<td style="color:' + v.color + ';font-weight:600;font-family:\'Rajdhani\',sans-serif">' + v.name + '</td>' +
+      '<td style="color:var(--c1);font-family:\'Orbitron\',sans-serif;font-size:11px">$' + v.minInvest + '</td>' +
+      '<td style="color:var(--c3);font-family:\'Orbitron\',sans-serif;font-size:11px">' + v.daily + '%</td>' +
+      '</tr>';
+  }).join('');
+}
+
+function buildUnlockVipSelect() {
+  var select = document.getElementById('vipActivateSelect');
+  var html = '<option value="">-- Choose VIP to Unlock --</option>';
+  for (var i = 0; i < VIP_LEVELS.length; i++) {
+    var v = VIP_LEVELS[i];
+    html += '<option value="' + v.level + '">VIP ' + v.level + ' - ' + v.name + ' ($' + v.minInvest + ')</option>';
+  }
+  select.innerHTML = html;
+}
+
+function getMedicineSVG(vip, color) {
+  var c = color;
+  switch (vip) {
+    case 1:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + ';stop-opacity:0.9"/><stop offset="100%" style="stop-color:#002244;stop-opacity:0.9"/></linearGradient></defs><ellipse cx="50" cy="110" rx="30" ry="6" fill="rgba(0,0,0,0.15)"/><rect x="32" y="40" width="36" height="65" rx="12" fill="url(#bg1)"/><rect x="38" y="28" width="24" height="16" rx="6" fill="' + c + '"/><rect x="40" y="20" width="20" height="10" rx="4" fill="#ccc"/><rect x="36" y="52" width="28" height="30" rx="4" fill="rgba(255,255,255,0.15)"/><text x="50" y="70" text-anchor="middle" fill="white" font-size="8" font-family="Arial" font-weight="bold">GLY</text><text x="50" y="80" text-anchor="middle" fill="white" font-size="6" font-family="Arial">PHOSATE</text></svg>';
+    case 2:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#003366"/></linearGradient></defs><ellipse cx="50" cy="115" rx="28" ry="5" fill="rgba(0,0,0,0.15)"/><rect x="34" y="35" width="32" height="75" rx="8" fill="url(#bg2)"/><rect x="38" y="22" width="24" height="16" rx="5" fill="' + c + '"/><rect x="40" y="15" width="20" height="9" rx="4" fill="#aaa"/><rect x="38" y="48" width="24" height="38" rx="4" fill="rgba(255,255,255,0.12)"/><text x="50" y="65" text-anchor="middle" fill="white" font-size="7" font-family="Arial" font-weight="bold">MANCOZEB</text></svg>';
+    case 3:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#665500"/></linearGradient></defs><ellipse cx="50" cy="115" rx="34" ry="5" fill="rgba(0,0,0,0.15)"/><rect x="22" y="45" width="56" height="65" rx="8" fill="url(#bg3)"/><rect x="34" y="30" width="22" height="18" rx="6" fill="' + c + '"/><rect x="36" y="22" width="18" height="10" rx="4" fill="#bbb"/><text x="50" y="74" text-anchor="middle" fill="white" font-size="7" font-family="Arial" font-weight="bold">CYPERMETHRIN</text></svg>';
+    case 4:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#880000"/></linearGradient></defs><ellipse cx="50" cy="118" rx="36" ry="5" fill="rgba(0,0,0,0.15)"/><rect x="18" y="38" width="64" height="75" rx="6" fill="url(#bg4)"/><rect x="30" y="30" width="40" height="12" rx="4" fill="' + c + '"/><text x="50" y="70" text-anchor="middle" fill="white" font-size="7" font-family="Arial" font-weight="bold">METALAXYL</text></svg>';
+    case 5:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#660066"/></linearGradient></defs><ellipse cx="50" cy="120" rx="34" ry="6" fill="rgba(0,0,0,0.15)"/><rect x="20" y="42" width="60" height="72" rx="10" fill="url(#bg5)"/><ellipse cx="50" cy="42" rx="30" ry="7" fill="' + c + '"/><text x="50" y="73" text-anchor="middle" fill="white" font-size="8" font-family="Arial" font-weight="bold">DIAZINON</text></svg>';
+    case 6:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#2d006e"/></linearGradient></defs><ellipse cx="50" cy="118" rx="26" ry="5" fill="rgba(0,0,0,0.15)"/><rect x="32" y="48" width="36" height="65" rx="10" fill="url(#bg6)"/><text x="50" y="74" text-anchor="middle" fill="white" font-size="8" font-family="Arial" font-weight="bold">2,4-D</text></svg>';
+    case 7:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#001a40"/></linearGradient></defs><ellipse cx="50" cy="118" rx="36" ry="5" fill="rgba(0,0,0,0.15)"/><rect x="18" y="44" width="64" height="70" rx="12" fill="url(#bg7)"/><text x="50" y="74" text-anchor="middle" fill="white" font-size="6" font-family="Arial" font-weight="bold">CHLORPYRIFOS</text></svg>';
+    case 8:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#004466"/></linearGradient></defs><ellipse cx="50" cy="120" rx="38" ry="5" fill="rgba(0,0,0,0.15)"/><rect x="14" y="40" width="72" height="76" rx="10" fill="url(#bg8)"/><text x="50" y="75" text-anchor="middle" fill="white" font-size="6" font-family="Arial" font-weight="bold">COPPER</text></svg>';
+    case 9:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg9" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#004400"/></linearGradient></defs><ellipse cx="50" cy="116" rx="22" ry="4" fill="rgba(0,0,0,0.15)"/><rect x="36" y="32" width="28" height="80" rx="14" fill="url(#bg9)"/><text x="50" y="64" text-anchor="middle" fill="white" font-size="7" font-family="Arial" font-weight="bold">ABAMECTIN</text></svg>';
+    case 10:
+      return '<svg width="100" height="140" viewBox="0 0 100 140"><defs><linearGradient id="bg10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:' + c + '"/><stop offset="100%" style="stop-color:#550000"/></linearGradient></defs><ellipse cx="50" cy="122" rx="40" ry="6" fill="rgba(0,0,0,0.2)"/><rect x="14" y="38" width="72" height="80" rx="14" fill="url(#bg10)"/><text x="50" y="82" text-anchor="middle" fill="white" font-size="9" font-family="Arial" font-weight="bold">CARBARYL</text></svg>';
+    default:
+      return '';
+  }
+}
+
+function buildVipCarousel() {
+  var track = document.getElementById('carouselTrack');
+  var dots = document.getElementById('carouselDots');
+  
+  var trackHtml = '';
+  for (var i = 0; i < VIP_LEVELS.length; i++) {
+    var v = VIP_LEVELS[i];
+    trackHtml += '<div class="vip-carousel-item">' +
+      '<div class="vip-medicine-visual">' +
+        '<div class="bottle-3d" style="filter:drop-shadow(0 5px 15px ' + v.color + '44)">' + getMedicineSVG(v.level, v.color) + '</div>' +
+      '</div>' +
+      '<div style="text-align:center">' +
+        '<div style="font-family:\'Orbitron\',sans-serif;font-size:13px;color:' + v.color + ';letter-spacing:2px">VIP ' + v.level + '</div>' +
+        '<div style="font-family:\'Rajdhani\',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-top:2px">' + v.name + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  track.innerHTML = trackHtml;
+
+  var dotsHtml = '';
+  for (var j = 0; j < VIP_LEVELS.length; j++) {
+    dotsHtml += '<div class="carousel-dot' + (j === 0 ? ' active' : '') + '" onclick="goToSlide(' + j + ')"></div>';
+  }
+  dots.innerHTML = dotsHtml;
+}
+
+var carouselIndex = 0;
+var carouselTimer;
+window.goToSlide = function(i) {
+  carouselIndex = i;
+  document.getElementById('carouselTrack').style.transform = 'translateX(-' + (i * 100) + 'vw)';
+  
+  var dots = document.querySelectorAll('.carousel-dot');
+  for (var j = 0; j < dots.length; j++) {
+    dots[j].classList.toggle('active', j === i);
+  }
+};
+
+function startCarousel() {
+  carouselTimer = setInterval(function() {
+    carouselIndex = (carouselIndex + 1) % VIP_LEVELS.length;
+    goToSlide(carouselIndex);
+  }, 2500);
+}
+
+function buildVipCards() {
+  var container = document.getElementById('vipCards');
+  var html = '';
+  for (var i = 0; i < VIP_LEVELS.length; i++) {
+    var v = VIP_LEVELS[i];
+    var daily = (v.minInvest*v.daily/100).toFixed(2);
+    var total = (v.minInvest*v.daily/100*v.days).toFixed(2);
+    html += '<div class="vip-card" style="border-color:' + v.color + '44">' +
+      '<div class="vip-card-icon" style="background:' + v.color + '15;border:1px solid ' + v.color + '33">' +
+        getMedicineSVG(v.level, v.color) +
+      '</div>' +
+      '<div class="vip-card-info">' +
+        '<h4 style="color:' + v.color + '">VIP ' + v.level + ' — ' + v.name + '</h4>' +
+        '<div class="medicine-name">' + v.use + '</div>' +
+        '<div class="medicine-use" style="color:' + v.color + ';margin-top:2px">Daily: $' + daily + ' | Total: $' + total + '</div>' +
+      '</div>' +
+      '<div class="vip-card-price">' +
+        '<div class="price" style="color:' + v.color + '">$' + v.minInvest + '</div>' +
+        '<div class="daily">' + v.daily + '% /day</div>' +
+        '<div class="duration">' + v.days + ' days</div>' +
+      '</div>' +
+    '</div>';
+  }
+  container.innerHTML = html;
+}
+
+function buildVipOptions() {
+  var container = document.getElementById('vipOptions');
+  var html = '';
+  for (var i = 0; i < VIP_LEVELS.length; i++) {
+    var v = VIP_LEVELS[i];
+    html += '<button class="vip-opt-btn" onclick="selectVip(' + v.level + ',this)" style="border-color:' + v.color + '44">' +
+      '<div style="font-family:\'Orbitron\',sans-serif;font-size:10px;color:' + v.color + '">VIP' + v.level + '</div>' +
+      '<div style="font-size:10px;color:var(--muted)">' + v.name + '</div>' +
+      '<div style="font-size:11px;font-weight:700;color:var(--text)">$' + v.minInvest + '</div>' +
+    '</button>';
+  }
+  container.innerHTML = html;
+}
+
+window.selectVip = function(level, btn) {
+  selectedVipLevel = level;
+  document.querySelectorAll('.vip-opt-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+  document.getElementById('depositAmount').value = VIP_LEVELS[level-1].minInvest;
+};
+
+window.selectBank = function(type) {
+  selectedBank = type;
+  document.getElementById('bankOptTRC').classList.toggle('selected', type==='trc20');
+  document.getElementById('bankOptCBE').classList.toggle('selected', type==='cbe');
+};
+
+// ─── AUTH ────────────────────────────────────────────────────────
+window.showLogin = function() {
+  document.getElementById('registerScreen').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+};
+
+window.showRegister = function() {
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('registerScreen').style.display='flex';
+};
+
+// ─── APP CREDENTIALS ───
+var firebaseConfig = {
+  apiKey: "AIzaSyA00jFybYwolZexojuP-hK97vq0Ct-Ov2I",
+  authDomain: "agro-pastesafe-wealth.firebaseapp.com",
+  databaseURL: "https://agro-pastesafe-wealth-default-rtdb.firebaseio.com",
+  projectId: "agro-pastesafe-wealth",
+  storageBucket: "agro-pastesafe-wealth.firebasestorage.app",
+  messagingSenderId: "504228619046",
+  appId: "1:504228619046:web:8bc4cfeed05b77e426d7e7",
+  measurementId: "G-ZE4C3DBYLR"
+};
+
+// Trigger Firebase Connection Setup (compat mode)
+initFirebaseConnection();
+
+// Auto-fill invitation code if present in url
+var inviteCodeFromUrl = getQueryParam('ref');
+if(inviteCodeFromUrl) {
+  document.getElementById('regInvCode').value = inviteCodeFromUrl;
+  document.getElementById('invNoteReg').style.display='block';
+  setTimeout(function() {
+    showRegister();
+  }, 500);
+}
+
+window.handleRegister = function() {
+  var name = document.getElementById('regName').value.trim();
+  var email = document.getElementById('regEmail').value.trim();
+  var password = document.getElementById('regPassword').value.trim();
+  var pin = document.getElementById('regPin').value.trim();
+  var invCode = document.getElementById('regInvCode').value.trim();
+
+  if(!name||!email||!password||!pin){ showToast('Please fill all fields',true); return; }
+  if(!invCode){ showToast('Invitation code is strictly required to register!',true); return; }
+  if(!validatePassword(password)){ showToast('Password must be 6 digits + 2 letters (8 chars total)',true); return; }
+  if(pin.length!==6||isNaN(pin)){ showToast('PIN must be exactly 6 digits',true); return; }
+
+  db.ref('users').once('value').then(function(snap) {
+    var existingEmail = false;
+    var inviterUID = null;
+    var validInvCode = false;
+
+    if(snap.exists()){
+      snap.forEach(function(child) {
+        var u = child.val();
+        if(u.email === email) existingEmail = true;
+        if(u.userId === invCode){
+          inviterUID = child.key;
+          validInvCode = true;
+        }
+      });
+    }
+
+    if(existingEmail){ showToast('Email already registered',true); return; }
+    if(!validInvCode){ showToast('Invalid invitation code! Please use a valid referral link.',true); return; }
+
+    var userId = generateUserId();
+    var newUserRef = db.ref('users').push();
+    var uid = newUserRef.key;
+    var newUser = {
+      name: name,
+      email: email,
+      password: password,
+      pin: pin,
+      userId: userId,
+      balance: 0,
+      totalDeposited: 0,
+      totalWithdrawn: 0,
+      totalEarned: 0,
+      vipLevel: 0,
+      invitedBy: invCode,
+      inviterUID: inviterUID,
+      pendingSpins: [],
+      createdAt: Date.now(),
+      lastEarningTime: 0,
+      bankInfo: { trc20: '', cbeName: '', cbeAccount: '' }
+    };
+
+    db.ref('users/' + uid).set(newUser).then(function() {
+      showToast('✅ Account created successfully! Please login.');
+      setTimeout(function() {
+        showLogin();
+      }, 1500);
+    });
+  }).catch(function(e) { showToast('Registration failed: ' + e.message, true); });
+};
+
+window.handleLogin = function() {
+  var email = document.getElementById('loginEmail').value.trim();
+  var password = document.getElementById('loginPassword').value.trim();
+  if(!email||!password){ showToast('Enter email and password',true); return; }
+
+  db.ref('users').once('value').then(function(snap) {
+    var found = false;
+    if(snap.exists()){
+      snap.forEach(function(child) {
+        var u = child.val();
+        if(u.email === email && u.password === password){
+          found = true;
+          currentUID = child.key;
+          currentUser = u;
+        }
+      });
+    }
+    if(!found){ showToast('Invalid email or password',true); return; }
+    initApp();
+  }).catch(function(e) { showToast('Login failed: ' + e.message, true); });
+};
+
+window.handleLogout = function() {
+  currentUser=null; currentUID=null; userData={};
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  showToast('Logged out successfully');
+};
+
+// ─── INIT APP ────────────────────────────────────────────────────
+function initApp() {
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('registerScreen').style.display='none';
+  document.getElementById('mainApp').style.display='flex';
+
+  db.ref('users/' + currentUID).on('value', function(snap) {
+    if(snap.exists()){
+      userData = snap.val();
+      updateUI();
+      processDailyEarnings();
+    }
+  });
+
+  buildVipCarousel();
+  buildVipCards();
+  buildVipOptions();
+  buildUnlockVipSelect();
+  buildHomeTable();
+  startCarousel();
+  loadCommunity();
+  loadTransactions();
+  updateInviteLink();
+}
+
+function updateUI() {
+  var b = userData.balance||0;
+  var vip = userData.vipLevel||0;
+  document.getElementById('topBalance').textContent='$'+(b).toFixed(2);
+  document.getElementById('topVip').textContent='VIP'+vip;
+  document.getElementById('walletBalance').textContent='$'+(b).toFixed(2);
+  document.getElementById('walletEarned').textContent='$'+(userData.totalEarned||0).toFixed(2);
+  document.getElementById('walletDeposited').textContent='$'+(userData.totalDeposited||0).toFixed(2);
+  document.getElementById('walletWithdrawn').textContent='$'+(userData.totalWithdrawn||0).toFixed(2);
+  document.getElementById('accName').textContent=userData.name||'—';
+  document.getElementById('accEmail').textContent=userData.email||'—';
+  document.getElementById('accId').textContent='ID: '+(userData.userId||'——————');
+  document.getElementById('accVip').textContent='VIP'+(userData.vipLevel||0);
+
+  var pendingSpins = userData.pendingSpins || [];
+  document.getElementById('spinCountText').textContent = 'Available Spins: ' + pendingSpins.length;
+
+  if(userData.bankInfo){
+    if(userData.bankInfo.trc20) document.getElementById('trc20Address').value=userData.bankInfo.trc20;
+    if(userData.bankInfo.cbeName) document.getElementById('cbeName').value=userData.bankInfo.cbeName;
+    if(userData.bankInfo.cbeAccount) document.getElementById('cbeAccount').value=userData.bankInfo.cbeAccount;
+  }
+}
+
+function updateInviteLink() {
+  var uid = userData.userId||'';
+  var link = window.location.origin+window.location.pathname+'?ref='+uid;
+  document.getElementById('inviteLinkDisplay').textContent=link;
+}
+
+window.copyInviteLink = function() {
+  var uid = userData.userId||'';
+  var link = window.location.origin+window.location.pathname+'?ref='+uid;
+  copyText(link);
+};
+
+// ─── TABS ────────────────────────────────────────────────────────
+window.switchTab = function(tab, navEl) {
+  var panes = document.querySelectorAll('.tab-pane');
+  for (var i = 0; i < panes.length; i++) {
+    panes[i].classList.remove('active');
+  }
+  
+  var items = document.querySelectorAll('.nav-item');
+  for (var j = 0; j < items.length; j++) {
+    items[j].classList.remove('active');
+  }
+
+  document.getElementById('tab-'+tab).classList.add('active');
+  navEl.classList.add('active');
+  if(tab==='status') loadTransactions();
+  if(tab==='community') loadCommunity();
+  if(tab==='wallet') loadTransactions();
+};
+
+// ─── VIP UNLOCK MECHANISM & DAILY ACCRUINGS ─────────────────────
+window.handleUnlockVip = function() {
+  var select = document.getElementById('vipActivateSelect');
+  var levelToUnlock = parseInt(select.value);
+
+  if(!levelToUnlock) { showToast('Please select a VIP level to unlock.', true); return; }
+  
+  var vipInfo = null;
+  for (var i = 0; i < VIP_LEVELS.length; i++) {
+    if (VIP_LEVELS[i].level === levelToUnlock) {
+      vipInfo = VIP_LEVELS[i];
+      break;
+    }
+  }
+  if(!vipInfo) return;
+
+  var currentBalance = userData.balance || 0;
+  if (currentBalance < vipInfo.minInvest) {
+    showToast('Insufficient balance. VIP ' + levelToUnlock + ' requires $' + vipInfo.minInvest, true);
+    return;
+  }
+
+  var newBalance = 0;
+  var updates = {
+    vipLevel: levelToUnlock,
+    balance: newBalance,
+    lastEarningTime: Date.now()
+  };
+
+  var txRef = db.ref('users/' + currentUID + '/transactions').push();
+  var txKey = txRef.key;
+  var unlockTx = {
+    type: 'withdraw',
+    subType: 'vip_purchase',
+    amount: vipInfo.minInvest,
+    status: 'Successful',
+    createdAt: Date.now()
+  };
+
+  db.ref('users/' + currentUID).update(updates).then(function() {
+    db.ref('users/' + currentUID + '/transactions/' + txKey).set(unlockTx);
+
+    if (userData.inviterUID) {
+      var invRef = db.ref('users/' + userData.inviterUID);
+      invRef.once('value').then(function(invSnap) {
+        if (invSnap.exists()) {
+          var invData = invSnap.val();
+          var spins = invData.pendingSpins || [];
+          if (!Array.isArray(spins)) spins = [];
+          spins.push(levelToUnlock);
+          invRef.update({ pendingSpins: spins });
+        }
+      });
+    }
+
+    showToast('🎉 VIP ' + levelToUnlock + ' activated successfully! Balance is locked.');
+  }).catch(function(e) {
+    showToast('Failed to unlock VIP: ' + e.message, true);
+  });
+};
+
+function processDailyEarnings() {
+  if (userData.vipLevel > 0 && userData.lastEarningTime) {
+    var now = Date.now();
+    var diff = now - userData.lastEarningTime;
+    var twentyFourHours = 24 * 60 * 60 * 1000;
+
+    if (diff >= twentyFourHours) {
+      var cycles = Math.floor(diff / twentyFourHours);
+      var vipInfo = null;
+      for (var i = 0; i < VIP_LEVELS.length; i++) {
+        if (VIP_LEVELS[i].level === userData.vipLevel) {
+          vipInfo = VIP_LEVELS[i];
+          break;
+        }
+      }
+      if (vipInfo) {
+        var dailyEarning = (vipInfo.minInvest * vipInfo.daily) / 100;
+        var totalEarnedToday = dailyEarning * cycles;
+
+        var newBalance = (userData.balance || 0) + totalEarnedToday;
+        var newTotalEarned = (userData.totalEarned || 0) + totalEarnedToday;
+        var newLastEarningTime = userData.lastEarningTime + (cycles * twentyFourHours);
+
+        var updates = {
+          balance: newBalance,
+          totalEarned: newTotalEarned,
+          lastEarningTime: newLastEarningTime
+        };
+
+        var batchUpdates = {};
+        for (var j = 0; j < cycles; j++) {
+          var txRef = db.ref('users/' + currentUID + '/transactions').push();
+          var txKey = txRef.key;
+          batchUpdates['transactions/' + txKey] = {
+            type: 'commission',
+            subType: 'daily_yield',
+            amount: dailyEarning,
+            status: 'Successful',
+            createdAt: userData.lastEarningTime + ((j + 1) * twentyFourHours)
+          };
+        }
+
+        db.ref('users/' + currentUID).update(updates).then(function() {
+          if (Object.keys(batchUpdates).length > 0) {
+            db.ref('users/' + currentUID).update(batchUpdates);
+          }
+        });
+        showToast('💰 Credited daily returns of $' + totalEarnedToday.toFixed(2));
+      }
+    }
+  }
+}
+
+// ─── LUCKY SPINNING WHEEL FUNCTIONALITY ─────────────────────────
+window.triggerLuckyWheel = function() {
+  if (isSpinning) return;
+  var spins = userData.pendingSpins || [];
+  if (spins.length === 0) {
+    showToast('No available spins in your queue!', true);
+    return;
+  }
+
+  isSpinning = true;
+  document.getElementById('spinActionBtn').disabled = true;
+
+  var levelSpun = spins[0];
+  var segmentPrice = levelSpun;
+  var segmentIndex = segmentPrice - 1;
+
+  var rotationDegrees = 3600 - (segmentIndex * 36) - 18;
+  var wheelInner = document.getElementById('wheelInner');
+  wheelInner.style.transform = 'rotate(' + rotationDegrees + 'deg)';
+
+  setTimeout(function() {
+    var updatedSpins = spins.slice();
+    updatedSpins.shift();
+
+    var newBalance = (userData.balance || 0) + segmentPrice;
+    var newTotalEarned = (userData.totalEarned || 0) + segmentPrice;
+
+    var txRef = db.ref('users/' + currentUID + '/transactions').push();
+    var txKey = txRef.key;
+    var txData = {
+      type: 'commission',
+      subType: 'lucky_wheel',
+      amount: segmentPrice,
+      status: 'Successful',
+      createdAt: Date.now()
+    };
+
+    db.ref('users/' + currentUID).update({
+      pendingSpins: updatedSpins,
+      balance: newBalance,
+      totalEarned: newTotalEarned
+    }).then(function() {
+      db.ref('users/' + currentUID + '/transactions/' + txKey).set(txData);
+    });
+
+    showToast('🎉 Congratulations! You won $' + segmentPrice + '.00 added to your balance.');
+
+    setTimeout(function() {
+      wheelInner.style.transition = 'none';
+      wheelInner.style.transform = 'rotate(0deg)';
+      setTimeout(function() {
+        wheelInner.style.transition = 'transform 4s cubic-bezier(0.1, 0.8, 0.1, 1)';
+        isSpinning = false;
+        document.getElementById('spinActionBtn').disabled = false;
+      }, 50);
+    }, 2000);
+
+  }, 4000);
+};
+
+// ─── DEPOSIT ─────────────────────────────────────────────────────
+window.openDepositModal = function() {
+  document.getElementById('depositModal').classList.add('open');
+};
+
+window.submitDeposit = function() {
+  var amount = parseFloat(document.getElementById('depositAmount').value);
+  var txNum = document.getElementById('depositTxNum').value.trim();
+  var statusEl = document.getElementById('depositStatus');
+
+  if(!selectedVipLevel){ showToast('Select a VIP level',true); return; }
+  if(!selectedBank){ showToast('Select a payment method',true); return; }
+  if(!amount||amount<=0){ showToast('Enter a valid amount',true); return; }
+  if(!txNum){ showToast('Enter transaction number',true); return; }
+
+  var minRequired = VIP_LEVELS[selectedVipLevel-1].minInvest;
+  if(amount < minRequired){ showToast('Minimum for VIP' + selectedVipLevel + ' is $' + minRequired,true); return; }
+
+  var txRef = db.ref('users/' + currentUID + '/transactions').push();
+  var txKey = txRef.key;
+  var tx = {
+    type:'deposit', amount: amount, txNum: txNum, vipLevel:selectedVipLevel,
+    bank:selectedBank, status:'waiting', createdAt:Date.now()
+  };
+  db.ref('users/' + currentUID + '/transactions/' + txKey).set(tx).then(function() {
+    statusEl.innerHTML='<span class="status-badge waiting">⏳ Waiting</span><p style="font-size:12px;color:var(--muted);margin-top:6px;font-family:\'Rajdhani\',sans-serif">Your deposit is pending admin approval.</p>';
+    showToast('✅ Deposit submitted!');
+  }).catch(function(e) { showToast('Error: '+e.message,true); });
+};
+
+// ─── WITHDRAW ────────────────────────────────────────────────────
+window.openWithdrawModal = function() {
+  var today = new Date().getDay();
+  if(today===0){ showToast('⛔ Withdrawals not allowed on Sundays',true); return; }
+  document.getElementById('withdrawModal').classList.add('open');
+};
+
+window.calcWithdrawFee = function() {
+  var amt = parseFloat(document.getElementById('withdrawAmount').value)||0;
+  var box = document.getElementById('feeCalcBox');
+  if(amt>0){
+    box.style.display='block';
+    var fee=amt*0.1, net=amt-fee;
+    document.getElementById('fcAmount').textContent='$'+amt.toFixed(2);
+    document.getElementById('fcFee').textContent='-$'+fee.toFixed(2);
+    document.getElementById('fcNet').textContent='$'+net.toFixed(2);
+  } else { box.style.display='none'; }
+};
+
+window.submitWithdraw = function() {
+  var today = new Date().getDay();
+  if(today===0){ showToast('⛔ No withdrawals on Sundays',true); return; }
+
+  var amount = parseFloat(document.getElementById('withdrawAmount').value);
+  var pin = document.getElementById('withdrawPin').value.trim();
+  var statusEl = document.getElementById('withdrawStatus');
+
+  if(!amount||amount<3){ showToast('Minimum withdrawal is $3.00',true); return; }
+  if(!pin||pin!==userData.pin){ showToast('Incorrect withdrawal PIN',true); return; }
+  if(amount>(userData.balance||0)){ showToast('Insufficient balance',true); return; }
+
+  var fee=amount*0.1, net=amount-fee;
+  var txRef = db.ref('users/' + currentUID + '/transactions').push();
+  var txKey = txRef.key;
+  var tx={type:'withdraw',amount: amount,fee: fee,net: net,pin: pin,status:'waiting',createdAt:Date.now()};
+  db.ref('users/' + currentUID + '/transactions/' + txKey).set(tx).then(function() {
+    db.ref('users/' + currentUID).update({balance:(userData.balance||0)-amount}).then(function() {
+      statusEl.innerHTML='<span class="status-badge waiting">⏳ Waiting</span><p style="font-size:12px;color:var(--muted);margin-top:6px;font-family:\'Rajdhani\',sans-serif">You will receive: <strong style="color:var(--c1)">$' + net.toFixed(2) + '</strong></p>';
+      showToast('✅ Withdrawal submitted!');
+    });
+  }).catch(function(e) { showToast('Error: '+e.message,true); });
+};
+
+// ─── TRANSACTIONS ────────────────────────────────────────────────
+window.filterTx = function(filter, btn) {
+  currentTxFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  loadTransactions();
+};
+
+function loadTransactions() {
+  db.ref('users/' + currentUID + '/transactions').once('value').then(function(snap) {
+    var txs=[];
+    if(snap.exists()) snap.forEach(function(c) { txs.push(assignObj({id:c.key}, c.val())); });
+    txs.sort(function(a, b) { return b.createdAt - a.createdAt; });
+    if(currentTxFilter!=='all') txs=txs.filter(function(t) { return t.type===currentTxFilter; });
+    renderTxList('statusTxList',txs);
+    renderTxList('walletTxList',txs.slice(0,5));
+  });
+}
+
+function renderTxList(elId, txs) {
+  var el = document.getElementById(elId);
+  if(!txs||txs.length===0){
+    el.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><p>No records found</p></div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < txs.length; i++) {
+    var tx = txs[i];
+    var icon='💰', cls='deposit-icon', typeLabel='Deposit', amountStr='+$'+tx.amount.toFixed(2), amountCls='positive';
+    if(tx.type==='withdraw'){
+      icon='💸';cls='withdraw-icon';typeLabel='Withdrawal';
+      amountStr='-$'+tx.amount.toFixed(2);amountCls='negative';
+    }
+    if(tx.type==='commission'){
+      icon='🎁';cls='commission-icon';
+      typeLabel = tx.subType === 'lucky_wheel' ? 'Lucky Spin' : (tx.subType === 'daily_yield' ? 'Daily Yield' : 'Commission');
+      amountStr='+$'+tx.amount.toFixed(2);
+    }
+    var statusMap={waiting:'waiting',Successful:'success',Paid:'paid',failed:'failed'};
+    var sc=statusMap[tx.status]||'waiting';
+    var sl={'waiting':'⏳ Waiting','Successful':'✅ Successful','Paid':'✅ Paid','failed':'❌ Failed'}[tx.status]||'⏳ Waiting';
+    var extra='';
+    if(tx.type==='withdraw'&&tx.net) extra='<div class="tx-detail">Fee: $' + (tx.fee||0).toFixed(2) + ' | Net: $' + tx.net.toFixed(2) + '</div>';
+    if(tx.vipLevel) extra+='<div class="tx-detail">VIP' + tx.vipLevel + ' | ' + (tx.bank||'') + '</div>';
+    
+    html += '<div class="tx-item">' +
+      '<div class="tx-icon ' + cls + '">' + icon + '</div>' +
+      '<div class="tx-info">' +
+        '<div class="tx-type">' + typeLabel + '</div>' +
+        '<div class="tx-date">' + formatDate(tx.createdAt) + '</div>' +
+        extra +
+      '</div>' +
+      '<div class="tx-amount-block">' +
+        '<div class="tx-amount ' + amountCls + '">' + amountStr + '</div>' +
+        '<span class="status-badge ' + sc + '">' + sl + '</span>' +
+      '</div>' +
+    '</div>';
+  }
+  el.innerHTML = html;
+}
+
+// ─── COMMUNITY ───────────────────────────────────────────────────
+function loadCommunity() {
+  var myId = userData.userId;
+  if(!myId) return;
+  db.ref('users').once('value').then(function(snap) {
+    if(!snap.exists()) return;
+    var groupA=[];
+    var groupB=[];
+    var groupC=[];
+    var totalRef=0;
+    var totalComm=0;
+    var activeRef=0;
+
+    snap.forEach(function(child) {
+      var u=child.val();
+      if(u.inviterUID===currentUID){
+        groupA.push(assignObj({uid: child.key}, u));
+        totalRef++;
+        if((u.vipLevel||0)>0) activeRef++;
+        
+        snap.forEach(function(c2) {
+          var u2=c2.val();
+          if(u2.inviterUID===child.key){ 
+            groupB.push(assignObj({uid: c2.key}, u2)); 
+            totalRef++; 
+          }
+        });
+      }
+    });
+
+    // Solves the "groupB.forEach is not a function" error on older WebViews by using standard ES1 for loops
+    for (var k = 0; k < groupB.length; k++) {
+      var bu = groupB[k];
+      snap.forEach(function(c3) {
+        var u3 = c3.val();
+        if(u3.inviterUID === bu.uid){ 
+          groupC.push(assignObj({uid: c3.key}, u3)); 
+          totalRef++; 
+        }
+      });
+    }
+
+    db.ref('users/' + currentUID + '/transactions').once('value').then(function(txSnap) {
+      if(txSnap.exists()) txSnap.forEach(function(t) { if(t.val().type==='commission') totalComm+=t.val().amount||0; });
+      document.getElementById('commTotalRef').textContent=totalRef;
+      document.getElementById('commTotalComm').textContent='$'+totalComm.toFixed(2);
+      document.getElementById('commActiveRef').textContent=activeRef;
+    });
+
+    renderRefGroup('groupA',groupA,'#28a745');
+    renderRefGroup('groupB',groupB,'#007bff');
+    renderRefGroup('groupC',groupC,'#fd7e14');
+  });
+}
+
+function renderRefGroup(elId, members, color) {
+  var el=document.getElementById(elId);
+  if(!members||members.length===0){
+    el.innerHTML='<p style="color:var(--muted);font-size:12px;font-family:\'Rajdhani\',sans-serif;padding:8px 0">No members yet</p>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < members.length; i++) {
+    var m = members[i];
+    var letter=(m.name||m.email||'U')[0].toUpperCase();
+    html += '<div class="ref-member">' +
+      '<div class="ref-avatar" style="background:' + color + '22;color:' + color + ';border:1px solid ' + color + '44">' + letter + '</div>' +
+      '<div class="ref-member-info">' +
+        '<div class="ref-member-email">' + (m.email||'—') + '</div>' +
+        '<div class="ref-member-vip">VIP' + (m.vipLevel||0) + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  el.innerHTML = html;
+}
+
+// ─── ACCOUNT ─────────────────────────────────────────────────────
+window.setBankTab = function(type,btn) {
+  var tabs = document.querySelectorAll('.bank-type-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+  }
+  btn.classList.add('active');
+  document.getElementById('bankTrc20Section').style.display=type==='trc20'?'block':'none';
+  document.getElementById('bankCbeSection').style.display=type==='cbe'?'block':'none';
+};
+
+window.saveBankInfo = function(type) {
+  var updates={};
+  if(type==='trc20'){
+    var addr=document.getElementById('trc20Address').value.trim();
+    if(!addr){showToast('Enter TRC20 address',true);return;}
+    updates['bankInfo/trc20']=addr;
+  } else {
+    var name=document.getElementById('cbeName').value.trim();
+    var acc=document.getElementById('cbeAccount').value.trim();
+    if(!name||!acc){showToast('Fill all fields',true);return;}
+    updates['bankInfo/cbeName']=name;
+    updates['bankInfo/cbeAccount']=acc;
+  }
+  db.ref('users/' + currentUID).update(updates).then(function() {
+    showToast('✅ Bank info saved!');
+  }).catch(function(e) { showToast('Error: '+e.message,true); });
+};
+
+window.changePin = function() {
+  var oldP=document.getElementById('oldPin').value.trim();
+  var newP=document.getElementById('newPin').value.trim();
+  if(oldP!==userData.pin){showToast('Incorrect current PIN',true);return;}
+  if(newP.length!==6||isNaN(newP)){showToast('New PIN must be 6 digits',true);return;}
+  db.ref('users/' + currentUID).update({pin:newP}).then(function() {
+    showToast('✅ PIN updated!');
+    document.getElementById('oldPin').value='';
+    document.getElementById('newPin').value='';
+  }).catch(function(e) { showToast('Error: '+e.message,true); });
+};
+
+window.changePassword = function() {
+  var oldP=document.getElementById('oldPassword').value.trim();
+  var newP=document.getElementById('newPassword').value.trim();
+  if(oldP!==userData.password){showToast('Incorrect current password',true);return;}
+  if(!validatePassword(newP)){showToast('Password must be 6 digits + 2 letters',true);return;}
+  db.ref('users/' + currentUID).update({password:newP}).then(function() {
+    showToast('✅ Password updated!');
+    document.getElementById('oldPassword').value='';
+    document.getElementById('newPassword').value='';
+  }).catch(function(e) { showToast('Error: '+e.message,true); });
+};
+
+window.downloadApp = function() {
+  // Direct Firebase Storage URL (CORS እገዳን ሙሉ በሙሉ ያልፋል)
+  var url = 'https://firebasestorage.googleapis.com/v0/b/agro-pestsafe-wealth.firebasestorage.app/o/app%2Fagro-pestsafe-wealth.apk?alt=media';
+  
+  var a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank'; // በቀጥታ በስልክዎ ብሮውዘር ላይ እንዲከፈት ያደርጋል
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('📥 Download started!');
+};
+
+window.closeModal = function(id) {
+  document.getElementById(id).classList.remove('open');
+};
+</script>
+
+</body>
+</html>
