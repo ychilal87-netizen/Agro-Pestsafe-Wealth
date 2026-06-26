@@ -24,7 +24,13 @@
   --muted: #6c757d;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+/* ሁሉንም ፊደላት Bold (ደማቅ) ለማድረግ */
+* { 
+  margin:0; 
+  padding:0; 
+  box-sizing:border-box; 
+  font-weight: 900 !important; 
+}
 
 body {
   font-family:'Inter',sans-serif;
@@ -2653,6 +2659,63 @@ window.switchTab = function(tab, navEl) {
   if(tab==='wallet') loadTransactions();
 };
 
+// --- COMMISSION LOGIC ---
+function addRecursiveCommission(uid, amount, type, level, fromEmail) {
+  if (!uid) return;
+  db.ref('users/' + uid).once('value', function(snap) {
+    if (snap.exists()) {
+      var invData = snap.val();
+      // ጋባዡ VIP አባል ካልሆነ ኮሚሽን ማግኘት አይችልም
+      if (!invData.vipLevel || invData.vipLevel <= 0) return;
+
+      var newBal = (invData.balance || 0) + amount;
+      var newEarned = (invData.totalEarned || 0) + amount;
+      
+      var txRef = db.ref('users/' + uid + '/transactions').push();
+      var txData = {
+        type: 'commission',
+        subType: type === 'deposit' ? 'deposit_commission' : 'daily_commission',
+        amount: amount,
+        status: 'Successful',
+        level: level,
+        from: fromEmail,
+        createdAt: Date.now()
+      };
+      
+      db.ref('users/' + uid).update({
+        balance: newBal,
+        totalEarned: newEarned
+      }).then(function() {
+        txRef.set(txData);
+      });
+    }
+  });
+}
+
+function processRecursive(type, amount, currentUserData) {
+  var email = currentUserData.email;
+  var rates = type === 'deposit' ? [0.08, 0.01, 0.01] : [0.03, 0.01, 0.01];
+
+  // Level A
+  if (currentUserData.inviterUID) {
+    addRecursiveCommission(currentUserData.inviterUID, amount * rates[0], type, 'A', email);
+    
+    // Level B
+    db.ref('users/' + currentUserData.inviterUID).once('value', function(s1) {
+      if (s1.exists() && s1.val().inviterUID) {
+        addRecursiveCommission(s1.val().inviterUID, amount * rates[1], type, 'B', email);
+        
+        // Level C
+        db.ref('users/' + s1.val().inviterUID).once('value', function(s2) {
+          if (s2.exists() && s2.val().inviterUID) {
+            addRecursiveCommission(s2.val().inviterUID, amount * rates[2], type, 'C', email);
+          }
+        });
+      }
+    });
+  }
+}
+
 // ─── VIP UNLOCK MECHANISM & DAILY ACCRUINGS ─────────────────────
 window.handleUnlockVip = function() {
   var select = document.getElementById('vipActivateSelect');
@@ -2682,18 +2745,10 @@ window.handleUnlockVip = function() {
     lastEarningTime: Date.now()
   };
 
-  var txRef = db.ref('users/' + currentUID + '/transactions').push();
-  var txKey = txRef.key;
-  var unlockTx = {
-    type: 'withdraw',
-    subType: 'vip_purchase',
-    amount: vipInfo.minInvest,
-    status: 'Successful',
-    createdAt: Date.now()
-  };
-
+  // VIP activation በ Status ውስጥ እንዳይመዘገብ (የተጠየቀው)
   db.ref('users/' + currentUID).update(updates).then(function() {
-    db.ref('users/' + currentUID + '/transactions/' + txKey).set(unlockTx);
+    // Deposit Commission Process (8%, 1%, 1%)
+    processRecursive('deposit', vipInfo.minInvest, userData);
 
     if (userData.inviterUID) {
       var invRef = db.ref('users/' + userData.inviterUID);
@@ -2754,6 +2809,9 @@ function processDailyEarnings() {
             status: 'Successful',
             createdAt: userData.lastEarningTime + ((j + 1) * twentyFourHours)
           };
+          
+          // ተጋባዥ ገቢ ሲያገኝ ለጋባዥ የሚከፈል ኮሚሽን (3%, 1%, 1%)
+          processRecursive('daily', dailyEarning, userData);
         }
 
         db.ref('users/' + currentUID).update(updates).then(function() {
@@ -2842,19 +2900,29 @@ window.submitDeposit = function() {
   if(!amount||amount<=0){ showToast('Enter a valid amount',true); return; }
   if(!txNum){ showToast('Enter transaction number',true); return; }
 
-  var minRequired = VIP_LEVELS[selectedVipLevel-1].minInvest;
-  if(amount < minRequired){ showToast('Minimum for VIP' + selectedVipLevel + ' is $' + minRequired,true); return; }
+  // FT Transaction Number Duplicate Check
+  db.ref('ft_registry/' + txNum).once('value', function(snapshot) {
+    if (snapshot.exists()) {
+      showToast('⚠️ FT transaction number is already used!', true);
+    } else {
+      var minRequired = VIP_LEVELS[selectedVipLevel-1].minInvest;
+      if(amount < minRequired){ showToast('Minimum for VIP' + selectedVipLevel + ' is $' + minRequired,true); return; }
 
-  var txRef = db.ref('users/' + currentUID + '/transactions').push();
-  var txKey = txRef.key;
-  var tx = {
-    type:'deposit', amount: amount, txNum: txNum, vipLevel:selectedVipLevel,
-    bank:selectedBank, status:'waiting', createdAt:Date.now()
-  };
-  db.ref('users/' + currentUID + '/transactions/' + txKey).set(tx).then(function() {
-    statusEl.innerHTML='<span class="status-badge waiting">⏳ Waiting</span><p style="font-size:12px;color:var(--muted);margin-top:6px;font-family:\'Rajdhani\',sans-serif">Your deposit is pending admin approval.</p>';
-    showToast('✅ Deposit submitted!');
-  }).catch(function(e) { showToast('Error: '+e.message,true); });
+      var txRef = db.ref('users/' + currentUID + '/transactions').push();
+      var txKey = txRef.key;
+      var tx = {
+        type:'deposit', amount: amount, txNum: txNum, vipLevel:selectedVipLevel,
+        bank:selectedBank, status:'waiting', createdAt:Date.now()
+      };
+      
+      db.ref('users/' + currentUID + '/transactions/' + txKey).set(tx).then(function() {
+        // FT ቁጥሩን በ registry ውስጥ መመዝገብ
+        db.ref('ft_registry/' + txNum).set(currentUID);
+        statusEl.innerHTML='<span class="status-badge waiting">⏳ Waiting</span><p style="font-size:12px;color:var(--muted);margin-top:6px;font-family:\'Rajdhani\',sans-serif">Your deposit is pending admin approval.</p>';
+        showToast('✅ Deposit submitted!');
+      }).catch(function(e) { showToast('Error: '+e.message,true); });
+    }
+  });
 };
 
 // ─── WITHDRAW ────────────────────────────────────────────────────
@@ -2911,7 +2979,13 @@ window.filterTx = function(filter, btn) {
 function loadTransactions() {
   db.ref('users/' + currentUID + '/transactions').once('value').then(function(snap) {
     var txs=[];
-    if(snap.exists()) snap.forEach(function(c) { txs.push(assignObj({id:c.key}, c.val())); });
+    if(snap.exists()) snap.forEach(function(c) { 
+      var rawTx = c.val();
+      // VIP Activation (vip_purchase) በ Status ዝርዝር ውስጥ እንዳይታይ
+      if (rawTx.subType !== 'vip_purchase') {
+        txs.push(assignObj({id:c.key}, rawTx)); 
+      }
+    });
     txs.sort(function(a, b) { return b.createdAt - a.createdAt; });
     if(currentTxFilter!=='all') txs=txs.filter(function(t) { return t.type===currentTxFilter; });
     renderTxList('statusTxList',txs);
@@ -3110,3 +3184,4 @@ window.closeModal = function(id) {
 
 </body>
 </html>
+
