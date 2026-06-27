@@ -2255,6 +2255,7 @@ var selectedVipLevel = null;
 var selectedBank = null;
 var currentTxFilter = 'all';
 var isSpinning = false;
+var isProcessingEarnings = false; // Prevents recursive update loops on daily yield processing
 
 // ─── HELPERS ────────────────────────────────────────────────────
 window.showToast = function(msg, isErr) {
@@ -2299,6 +2300,23 @@ function createParticles() {
     p.style.cssText = 'width:' + size + 'px;height:' + size + 'px;background:' + colors[Math.floor(Math.random()*colors.length)] + ';left:' + Math.random()*100 + '%;bottom:' + Math.random()*30 + '%;animation-duration:' + (3+Math.random()*4) + 's;animation-delay:' + Math.random()*5 + 's;opacity:0;';
     container.appendChild(p);
   }
+}
+
+// Helper to safely get pending spins array from Firebase (Realtime DB might save small arrays as objects)
+function getSafeSpinsArray(spinsField) {
+  if (!spinsField) return [];
+  if (Array.isArray(spinsField)) return spinsField;
+  if (typeof spinsField === 'object') {
+    var arr = [];
+    var keys = Object.keys(spinsField).sort(function(a, b) {
+      return parseInt(a) - parseInt(b);
+    });
+    for (var i = 0; i < keys.length; i++) {
+      arr.push(spinsField[keys[i]]);
+    }
+    return arr;
+  }
+  return [];
 }
 
 // ─── BUILD UI ───────────────────────────────────────────────────
@@ -2618,7 +2636,7 @@ function updateUI() {
   document.getElementById('accId').textContent='ID: '+(userData.userId||'——————');
   document.getElementById('accVip').textContent='VIP'+(userData.vipLevel||0);
 
-  var pendingSpins = userData.pendingSpins || [];
+  var pendingSpins = getSafeSpinsArray(userData.pendingSpins);
   document.getElementById('spinCountText').textContent = 'Available Spins: ' + pendingSpins.length;
 
   if(userData.bankInfo){
@@ -2755,8 +2773,7 @@ window.handleUnlockVip = function() {
       invRef.once('value').then(function(invSnap) {
         if (invSnap.exists()) {
           var invData = invSnap.val();
-          var spins = invData.pendingSpins || [];
-          if (!Array.isArray(spins)) spins = [];
+          var spins = getSafeSpinsArray(invData.pendingSpins);
           spins.push(levelToUnlock);
           invRef.update({ pendingSpins: spins });
         }
@@ -2770,12 +2787,14 @@ window.handleUnlockVip = function() {
 };
 
 function processDailyEarnings() {
+  if (isProcessingEarnings) return;
   if (userData.vipLevel > 0 && userData.lastEarningTime) {
     var now = Date.now();
     var diff = now - userData.lastEarningTime;
     var twentyFourHours = 24 * 60 * 60 * 1000;
 
     if (diff >= twentyFourHours) {
+      isProcessingEarnings = true;
       var cycles = Math.floor(diff / twentyFourHours);
       var vipInfo = null;
       for (var i = 0; i < VIP_LEVELS.length; i++) {
@@ -2816,10 +2835,18 @@ function processDailyEarnings() {
 
         db.ref('users/' + currentUID).update(updates).then(function() {
           if (Object.keys(batchUpdates).length > 0) {
-            db.ref('users/' + currentUID).update(batchUpdates);
+            db.ref('users/' + currentUID).update(batchUpdates).then(function() {
+              isProcessingEarnings = false;
+            });
+          } else {
+            isProcessingEarnings = false;
           }
+        }).catch(function(err) {
+          isProcessingEarnings = false;
         });
         showToast('💰 Credited daily returns of $' + totalEarnedToday.toFixed(2));
+      } else {
+        isProcessingEarnings = false;
       }
     }
   }
@@ -2828,7 +2855,7 @@ function processDailyEarnings() {
 // ─── LUCKY SPINNING WHEEL FUNCTIONALITY ─────────────────────────
 window.triggerLuckyWheel = function() {
   if (isSpinning) return;
-  var spins = userData.pendingSpins || [];
+  var spins = getSafeSpinsArray(userData.pendingSpins);
   if (spins.length === 0) {
     showToast('No available spins in your queue!', true);
     return;
@@ -2838,7 +2865,7 @@ window.triggerLuckyWheel = function() {
   document.getElementById('spinActionBtn').disabled = true;
 
   var levelSpun = spins[0];
-  var segmentPrice = levelSpun;
+  var segmentPrice = levelSpun; // VIP1 = $1, VIP2 = $2... VIP10 = $10
   var segmentIndex = segmentPrice - 1;
 
   var rotationDegrees = 3600 - (segmentIndex * 36) - 18;
@@ -3165,12 +3192,12 @@ window.changePassword = function() {
 };
 
 window.downloadApp = function() {
-  // Direct Firebase Storage URL (CORS እገዳን ሙሉ በሙሉ ያልፋል)
+  // Direct Firebase Storage URL
   var url = 'https://firebasestorage.googleapis.com/v0/b/agro-pestsafe-wealth.firebasestorage.app/o/app%2Fagro-pestsafe-wealth.apk?alt=media';
   
   var a = document.createElement('a');
   a.href = url;
-  a.target = '_blank'; // በቀጥታ በስልክዎ ብሮውዘር ላይ እንዲከፈት ያደርጋል
+  a.target = '_blank';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -3184,4 +3211,3 @@ window.closeModal = function(id) {
 
 </body>
 </html>
-
